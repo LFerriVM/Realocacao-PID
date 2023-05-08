@@ -1,0 +1,68 @@
+@using Models
+@model IEnumerable<Personagem>
+<div class="row">
+    <div class="col-12 m-auto text-center">
+        <h1>Suas Fichas</h1>
+    </div>
+    <div class="col-1 position-relative">
+        <div class="position-absolute start-50 top-50 translate-middle">
+            <form method="GET" asp-action="Exibir" asp-controller="Ficha">
+                @{
+                    int? IdPersonagem = null;
+                }
+                <button type="submit" asp-controller="Ficha" asp-action="Exibir"
+                    class="btn btn-secondary text-black">Criar Ficha</button>
+                <input type="hidden" asp-for="@IdPersonagem">
+            </form>
+        </div>
+    </div>
+    <div class="row col-9 m-auto">
+        @foreach (var personagem in Model)
+        {
+            if (personagem.IdUsuario == @ViewBag.usuariologado.IdUsuario)
+            {
+                <div class='@("card bg-secondary border-2 border-dark mx-2")' style="width: 18rem;">
+                    @if (personagem.IdClasse is not null)
+                    {
+                        <p class="lead m-auto">@personagem.Classe.Nome</p>
+                        <img src="~/png/@(personagem.IdClasse).png" class="card-img-top m-auto pt-2"
+                        style="width: 60px; height: 60px">
+                    }
+                    else
+                    {
+                        <h5 class="card-title m-auto pt-2">Pesonagem ainda sem classe</h5>
+                    }
+                    <hr>
+                    <div class="card-body">
+                        @if (personagem.Nome != "")
+                        {
+                            <h5 class="card-title m-auto text-center">@personagem.Nome</h5>
+                        }
+                        else
+                        {
+                            <h5 class="card-title m-auto text-center">Personagem ainda sem nome</h5>
+                        }
+                        <hr>
+                        @if (personagem.IdRaca is not null && personagem.IdSubRaca is not null)
+                        {
+                            <p class="lead m-auto">@personagem.Raca.Nome | @personagem.SubRaca.Nome</p>
+                        }
+                        else if (personagem.IdRaca is not null && personagem.IdSubRaca is null)
+                        {
+                            <p class="lead m-auto">@personagem.Raca.Nome</p>
+                        }
+                        else
+                        {
+                            <p class="lead m-auto">Persaongem ainda sem raça</p>
+                        }
+                        <a style="text-decoration: none" class="text-black btn btn-primary text-white" asp-controller="Ficha"
+                    asp-action="Exibir" asp-route-IdPersonagem="@personagem.IdPersonagem">Visualizar</a>
+                        <a style="text-decoration: none" class="text-black btn btn-secondary" asp-action="ExcluirFicha"
+                    asp-controller="Home" asp-route-IdPersonagem="@personagem.IdPersonagem">Excluir
+                        </a>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+</div>

@@ -1,0 +1,37 @@
+@model Personagem;
+@if (@Model.Tendencia == "LB")
+{
+    <input type="text" size="25" readonly value="Leal e Bom">
+}
+else if (@Model.Tendencia == "LN")
+{
+    <input type="text" size="25" readonly value="Leal e Neutro">
+}
+else if (@Model.Tendencia == "LM")
+{
+    <input type="text" size="25" readonly value="Leal e Mal">
+}
+else if (@Model.Tendencia == "NB")
+{
+    <input type="text" size="25" readonly value="Neutro e Bom">
+}
+else if (@Model.Tendencia == "TN")
+{
+    <input type="text" size="25" readonly value="Totalmente Neutro">
+}
+else if (@Model.Tendencia == "NM")
+{
+    <input type="text" size="25" readonly value="Neutro e Mal">
+}
+else if (@Model.Tendencia == "CB")
+{
+    <input type="text" size="25" readonly value="Caótico e Bom">
+}
+else if (@Model.Tendencia == "CN")
+{
+    <input type="text" size="25" readonly value="Caótico e Neutro">
+}
+else if (@Model.Tendencia == "CM")
+{
+    <input type="text" size="25" readonly value="Caótico e Mal">
+}

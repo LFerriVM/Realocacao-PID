@@ -1,0 +1,684 @@
+@model Personagem
+<div class="modal fade" id="_EscolherItemModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title texto-2" id="modalTitleId">Escolher Equipamento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                @if(@Model.IdClasse is not null)
+                {
+                    <form method="POST" asp-action="EscolherItem" asp-controller="Item">
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                    @{
+                        List<int> armas = new List<int>();
+                        List<int> armaduras = new List<int>();
+                        List<int> itens = new List<int>();
+
+                    }
+                    <div class="box1">
+                        <div style="justify-self: center; clear:right; position:static">
+                            @if (@Model.IdClasse == 1)
+                            {
+                                <div>
+                                    <h3 class="texto-1">Classe: Bárbaro</h3>
+                                    <label for="equip" class="texto-2">Um machado grande ou qualquer arma marcial corpo-a-corpo</label>
+                                    <br>
+                                    <br>
+                                    <select class="area" style="height: auto" asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            if (listaarma.IdTipoArma == 3)
+                                            {
+                                                <option value="@listaarma.IdArma">@listaarma.Nome (@listaarma.DadoDano)</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Dois machados de mão ou qualquer arma simples</label>
+                                    <br>
+                                    <br>
+                                    <select class="area" style="height: auto" asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            if (listaarma.IdTipoArma == 1 || listaarma.IdTipoArma == 2)
+                                            {
+                                                if (@listaarma.IdArma == 8)
+                                                {
+                                                <option value="@listaarma.IdArma">@listaarma.Nome (@listaarma.DadoDano)(2x)</option>
+
+                                                }
+                                        <option value="@listaarma.IdArma">@listaarma.Nome (@listaarma.DadoDano)</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um pacote de aventureiro e quatro azagaias<label>
+                                    <br>
+                                </div>
+                            }
+                            @if (@Model.IdClasse == 2)
+                            {
+                                <div>
+                                    <h3 class="texto-1">Classe: Bardo</h3>
+                                    <label for="equip" class="texto-2">Uma rapieira, uma espada longa ou qualquer arma simples</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            if (listaarma.IdTipoArma == 1 || listaarma.IdTipoArma == 2)
+                                            {
+                                        <option value="@listaarma.IdArma">@listaarma.Nome (@listaarma.DadoDano)</option>
+                                            }
+                                            if (listaarma.IdArma == 20 || listaarma.IdArma == 30)
+                                            {
+                                        <option value="@listaarma.IdArma">@listaarma.Nome (@listaarma.DadoDano)</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um pacote de diplomata ou um pacote de artista</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        <option value="136">Pacote de Artista</option>
+                                        <option value="139">Pacote de Diplomata</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um lute ou qualquer outro instrumento musical</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaitem in @ViewBag.listaitem)
+                                        {
+                                            if (listaitem.IdItem >= 118 && listaitem.IdItem <= 127)
+                                            {
+                                        <option value="@listaitem.IdItem">@listaitem.Nome</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Armadura de couro e uma adaga</label>
+                                    <br>
+                                    <br>
+                                </div>
+                            }
+                            @if (@Model.IdClasse == 3)
+                            {
+                                <div>
+                                    <h3 class="texto-1">Classe: Bruxo</h3>
+                                    <label for="equip" class="texto-2">Uma besta leve e 20 virotes ou qualquer arma simples</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            if (listaarma.IdTipoArma < 3)
+                                            {
+                                                <option value="@listaarma.IdArma">@listaarma.Nome (@listaarma.DadoDano)</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Uma bolsa de componentes ou um foco arcano</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaitem in @ViewBag.listaitem)
+                                        {
+                                            @if (listaitem.IdItem == 17 || (listaitem.IdItem >= 33 && listaitem.IdItem <= 37))
+                                            {
+                                        <option value="@listaitem.IdItem">@listaitem.Nome</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um pacote de estudioso ou um pacote de explorador</label>
+                                    <select asp-for=@itens>
+                                        <option value="">Selecione</option>
+                                        <option value="140">Pacote de Estudioso</option>
+                                        <option value="141">Pacote de Explorador</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Armadura de couro, qualquer arma simples e duas adagas</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            if (listaarma.IdTipoArma < 3)
+                                            {
+                                                <option value="@listaarma.IdArma">@listaarma.Nome (@listaarma.DadoDano)</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            }
+                            @if (@Model.IdClasse == 4)
+                            {
+                                <div>
+                                    <h3 class="texto-1">Classe: Clérigo</h3>
+                                    <label for="equip" class="texto-2">Uma maça ou um martelo de guerra (se for proficiente)</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        <option value="7">Maça(1d6 concussão)</option>
+                                        @foreach (var listaproficienciaarma in @ViewBag.listaproficienciaarma)
+                                        {
+                                            @foreach (var listaarma in @ViewBag.listaarma)
+                                            {
+                                                if (listaproficienciaarma.IdPersonagem == @Model.IdPersonagem && listaproficienciaarma.IdArma == 28)
+                                                {
+                                                    <option value="28">Martelo de Guerra(1d8 concussão)</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Brunea, armadura de couro ou cota de malha (se for proficiente)</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armaduras">
+                                        <option value="">Escolha</option>
+                                        <option value="2">Armadura de couro</option>
+                                        <option value="6">Brunea</option>
+                                        @foreach (var listaproficienciaarmadura in @ViewBag.listaproficienciaarmadura)
+                                        {
+                                            @foreach (var listaarmadura in @ViewBag.listaarmadura)
+                                            {
+                                                @if (listaarmadura.IdArmadura == 10 && listaarmadura.IdArmadura == listaproficienciaarmadura.IdArmadura && listaproficienciaarmadura.IdPersonagem == @Model.IdPersonagem)
+                                                {
+                                                <option value="10">Cota de malha (se for proficiente)</option>
+                                                }
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Uma besta leve e 20 virotes ou qualquer arma simples</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            @if (listaarma.IdTipoArma < 3)
+                                            {
+                                        <option value=@listaarma.IdArma>@listaarma.Nome (@listaarma.DadoDano)</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um pacote de sacerdote ou um pacote de aventureiro</label>
+                                    <select asp-for=@itens>
+                                        <option value="">Selecione</option>
+                                        <option value="138">Pacote de Aventureiro</option>
+                                        <option value="142">Pacote de Sacerdote</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um escudo e um símbolo sagrado</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha um Símbolo Sagrado</option>
+                                        @foreach (var listaitem in @ViewBag.listaitem)
+                                        {
+                                            @if (listaitem.IdItem >= 89 && listaitem.IdItem <= 91)
+                                            {
+                                        <option value="@listaitem.IdItem">@listaitem.Nome</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            }
+                            @if (@Model.IdClasse == 5)
+                            {
+                                <div>
+                                    <h3 class="texto-1">Classe: Druida</h3>
+
+                                    <label for="equip" class="texto-2">Um escudo de madeira ou qualquer arma simples</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armaduras">
+                                        <option value=13>Escudo de Madeira</option>
+                                    </select>
+                                    <div id="armasdruida">
+                                        <select asp-for="@armas">
+                                            <option value="">Escolha</option>
+                                            @foreach (var listaarma in @ViewBag.listaarma)
+                                            {
+                                                if (listaarma.IdTipoArma < 3)
+                                                {
+                                                    <option value="@listaarma.IdArma">@listaarma.Nome (@listaarma.DadoDano)</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Uma cimitarra ou qualquer arma corpo-a-corpo simples</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            if (listaarma.IdTipoArma == 1 || listaarma.IdArma == 16)
+                                            {
+                                                <option value="@listaarma.IdArma">@listaarma.Nome (@listaarma.DadoDano)</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um pacote de estudioso ou um pacote de explorador</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        <option value="140">Pacote de estudioso</option>
+                                        <option value="141">Pacote de explorador</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Armadura de couro, pacote de aventureiro e um foco druídico</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaitem in @ViewBag.listaitem)
+                                        {
+                                            if (listaitem.IdItem >= 38 && listaitem.IdItem <= 41)
+                                            {
+                                                <option value="@listaitem.IdItem">@listaitem.Nome</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            }
+                            @if (Model.IdClasse == 6)
+                            {
+                                <div>
+                                    <h3 class="texto-1">Classe: Feiticeiro</h3>
+                                    <label for="equip" class="texto-2">Uma besta leve e 20 virotes ou qualquer arma simples</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            @if (listaarma.IdTipoArma < 3)
+                                            {
+                                                <option value="@listaarma.IdArma">@listaarma.Nome</option>
+                                            }
+
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Uma bolsa de componentes ou um foco arcano</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaitem in @ViewBag.listaitem)
+                                        {
+
+                                            @if (listaitem.IdItem == 17 || (listaitem.IdItem >= 33 && listaitem.IdItem <= 37))
+                                            {
+                                                <option value="@listaitem.IdItem">@listaitem.Nome</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um pacote de explorador ou um pacote de aventureiro</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        <option value="138">Pacote de aventureiro</option>
+                                        <option value="141">Pacote de explorador</option>
+                                    </select>
+                                </div>
+                            }
+                            @if (Model.IdClasse == 7)
+                            {
+                                <div>
+                                    <h3 class="texto-1">Classe: Guerreiro</h3>
+                                    <label for="equip" class="texto-2">Cota de malha ou gibão de peles, arco longo e 20 flechas</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armaduras">
+                                        <option value="">Escolha</option>
+                                        <option value="4">Gibão de peles</option>
+                                        <option value="10">Cota de malha</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Uma arma marcial e um escudo ou duas armas marciais</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas" multiple>
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            @if (listaarma.IdTipoArma > 2)
+                                            {
+                                                <option value="@listaarma.IdArma">@listaarma.Nome (@listaarma.DadoDano)</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Uma besta leve e 20 virotes ou dois machados de arremesso</label>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        <option value="12">Besta leve e 20 virotes</option>
+                                        <option value="8">Machadinha (1d6)(2x)</option>
+                                    </select>
+                                    <br>
+                                    <label for="equip">Um pacote de aventureiro ou um pacote de explorador</label>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        <option value="138">Pacote de aventureiro</option>
+                                        <option value="141">Pacote de explorador</option>
+                                    </select>
+                                </div>
+                            }
+                            @if (Model.IdClasse == 8)
+                            {
+                                <div>
+                                    <h3 class="texto-1">Classe: Ladino</h3>
+                                    <label for="equip" class="texto-2">Uma rapieira ou uma espada longa</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        <option value="30">Rapieira</option>
+                                        <option value="20">Espada longa</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um arco curto e uma aljava com 20 flechas ou uma espada curta</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        <option value="11">Arco curto (1d6) e aljava com 20 flechas</option>
+                                        <option value="18">Espada curta(1d6)</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um pacote de assaltante ou um pacote de aventureiro ou um pacote de explorador</label>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        <option value="137">Pacote de Assaltante</option>
+                                        <option value="138">Pacote de Aventureiro</option>
+                                        <option value="141">Pacote de Explorador</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip">Armadura de couro, duas adagas e ferramentas de ladrão</label>
+                                </div>
+                            }
+                            @if (Model.IdClasse == 9)
+                            {
+                                <div>
+                                    <h3 class="texto-1">Classe: Mago</h3>
+                                    <label for="equip" class="texto-2">Um bordão ou uma adaga</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        <option value="1">Adaga</option>
+                                        <option value="3">Bordão</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Uma bolsa de componentes ou um foco arcano</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaitem in @ViewBag.listaitem)
+                                        {
+                                            @if (listaitem.IdItem == 17 || (listaitem.IdItem >= 33 && listaitem.IdItem <= 37))
+                                            {
+                                                <option value="@listaitem.IdItem">@listaitem.Nome</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um pacote de estudioso ou um pacote de explorador</label>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        <option value="140">Pacote de Estudioso</option>
+                                        <option value="141">Pacote de Explorador</option>
+                                    </select>
+                                    <br>
+                                    <label for="equip"> Um Grimório</label>
+                                    <br>
+                                    <br>
+                                </div>
+                            }
+                            @if (Model.IdClasse == 10)
+                            {
+                                <div>
+                                    <h3 class="texto-1">Classe: Monge</h3>
+
+                                    <label for="equip" class="texto-2">Uma espada curta ou qualquer arma simples</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                                        {
+                                                            @if (@listaarma.IdTipoArma < 3)
+                                                            {
+                                                        <option value="@listaarma.IdArma">@listaarma.Nome</option>
+                                                            }
+                                                        }
+                                        <option value="18">Adaga</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um pacote de explorador ou um pacote de aventureiro</label>
+                                    <br>
+                                    <br>
+
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        <option value="138">Pacote de Aventureiro</option>
+                                        <option value="141">Pacote de Explorador</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip">10 dardos</label>
+                                    <br>
+                                </div>
+                            }
+                            @if (Model.IdClasse == 11)
+                            {
+                                <div>
+                                    <h3 class="texto-1">Classe: Paladino</h3>
+                                    <label for="equip" class="texto-2">Uma arma marcial e escudo ou duas armas marciais</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas" multiple>
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            @if (listaarma.IdTipoArma > 2)
+                                            {
+                                                <option value="@listaarma.IdArma">@listaarma.Nome</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Cinco azagais ou qualquer arma simples corpo-a-corpo</label>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            @if (listaarma.IdTipoArma < 2 && listaarma.IdArma != 2)
+                                            {
+                                                <option value="@listaarma.IdArma">@listaarma.Nome</option>
+                                            }
+                                            @if (listaarma.IdArma == 2)
+                                            {
+                                                <option value="@listaarma.IdArma">@listaarma.Nome (5x)</option>
+                                            }
+                                        }
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um Pacote de Sacerdote ou um Pacote de Aventureiro</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        <option value="138">Pacote de Aventureiro</option>
+                                        <option value="142">Pacote de Sacerdote</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Cota de malha e um símbolo sagrado</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaitem in @ViewBag.listaitem)
+                                        {
+                                            @if (listaitem.IdItem >= 89 && listaitem.IdItem <= 91)
+                                            {
+                                                <option value="@listaitem.IdItem">@listaitem.Nome</option>
+                                            }
+                                        }
+                                    </select>
+                                </div>
+                            }
+                            @if (Model.IdClasse == 12)
+                            {
+                                <div>
+                                    <h3 class="texto-1">Classe: Patrulheiro</h3>
+                                    <label for="equip" class="texto-2">Brunea ou Armadura de couro</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armaduras">
+                                        <option value="">Escolha</option>
+                                        <option value="2">Armadura de couro</option>
+                                        <option value="6">Brunea</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Duas espadas curtas ou duas armas simples corpo-a-corpo</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@armas">
+                                        <option value="">Escolha</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            @if (listaarma.IdTipoArma < 2)
+                                            {
+                                                <option value="listaarma.IdArma">@listaarma.Nome</option>
+                                            }
+                                        }
+                                        <option value="18">Espada Curta (2x)</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip" class="texto-2">Um Pacote de Explorador ou um Pacote de Aventureiro</label>
+                                    <br>
+                                    <br>
+                                    <select asp-for="@itens">
+                                        <option value="">Escolha</option>
+                                        <option value="138">Pacote de Aventureiro</option>
+                                        <option value="141">Pacote de Explorador</option>
+                                    </select>
+                                    <br>
+                                    <br>
+                                    <hr>
+                                    <label for="equip">Um arco longo e uma aljava com 20 flechas</label>
+                                    <br>
+                                    <br>
+                                </div>
+                            }
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                </form>
+                }
+                else{
+                    <h6 class="display-6 text-center">Escolha uma classe<br>Primeiro</h6>
+                }
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                
+            </div>
+        </div>
+    </div>
+</div>

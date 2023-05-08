@@ -1,0 +1,577 @@
+@model Personagem;
+
+<div id="container_telafrontal" class="container bg bg-fundoclaro" style="min-width: 1260px">
+    <div class="col">
+        @* Nome + Classe/Nível + Raça *@
+        <div class="row mt-4">
+            @* Nome *@
+            <div class="row col-5 border border-1 border-dark rounded mx-0 d-flex align-items-center">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="~/png/dadin.png"  class="w-75">
+                    </div>
+                    <div class="col p-0 d-flex flex-column my-auto justify-content-start">
+                        <input type="text" class="w-75" readonly value="@Model.Nome" style="vertical-align: middle"
+                        data-bs-toggle="modal" data-bs-target="#_EscolherNomeModal">
+                        <partial name="~/Views/Personagem/_EscolherNomeModal.cshtml"></partial>
+                        <label class="text-uppercase lead d-block text-left">NOME</label>
+                    </div>
+                </div>
+            </div>
+            <div class="col-7 row row-cols-2 border border-1 border-dark rounded mx-0 d-flex align-items-center">
+                @* Classe/Nivel + Raça *@
+                <div class="col">
+                    <div class="row">
+                        <div class="col-8 pe-0 me-1">
+                        @foreach (var listaclasse in @ViewBag.listaclasse)
+                        {
+                            if (@Model.IdClasse == listaclasse.IdClasse)
+                            {
+                                <input type="text" class="w-100" readonly value='@listaclasse.Nome'
+                            data-bs-target="#_DetalheClasseModal" data-bs-toggle="modal">
+                                <partial name="~/Views/Classe/_DetalheClasseModal.cshtml"></partial>
+                            }
+                        }
+                        @if (@Model.IdClasse == null)
+                        {
+                            <input type="text" class="w-100" readonly data-bs-toggle="modal" onclick="classe_escolha_raca()" data-bs-target="#_EscolherClasseModal">
+                        }
+                        @if (@Model.IdRaca is not null)
+                        {
+                            <partial name="~/Views/Classe/_EscolherClasseModal.cshtml"></partial>
+                        }
+                        <div>
+                            <button class="texto-conteudo text-left bg bg-primary rounded-pill my-2 op-50 position-relative border border-dark border-1"
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="bottom"
+                            data-bs-title="Aqui é onde escolherá a especialidade de seu personagem! Um ávido e bravo guerreiro; um habilidoso músico, capaz de tomar o coração de multidões; um poderoso bruxo, com o arsenal mágico capaz de maravilhas - ou de terríveis feitos?"
+                            >CLASSE<span class="position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger">?</span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="col-2 p-0">
+                        <form id="nivel_form" asp-action="AlterarNivel" asp-controller="Personagem" class="w-100 px-0 ">
+                            <input type="number" onfocusout="submit_nivel_form()" asp-for="@Model.Nivel" class="w-100 w-m100" min="1" max="20">
+                            <input type="hidden" asp-for="@Model.IdPersonagem">
+                        </form>
+                        <div>
+                            <button class="texto-conteudo text-left bg bg-primary rounded-pill my-2 op-50 position-relative border border-dark border-1" 
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="bottom" 
+                            data-bs-title="O nível do seu personagem. Varia de 1 a 20. Conforme você progride na história, seu nível aumentará e novas habilidades serão desbloqueadas, de acordo. Confira a página de classes para mais detalhes!"
+                            >NÍVEL<span class="position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger">?</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>   
+                    <div class="col-8">
+                        @foreach (var listaraca in @ViewBag.listaraca)
+                        {
+                            @if (@Model.IdSubRaca == null && @Model.IdRaca != null && @Model.IdRaca == listaraca.IdRaca)
+                            {
+                                <input type="text" class="w-100" readonly value="@listaraca.Nome" data-bs-toggle="modal"
+                            data-bs-target="#_DetalheRacaModal">
+                                <partial name="~/Views/Raca/_DetalheRacaModal.cshtml"></partial>
+                            }
+
+                            @if (@Model.IdSubRaca != null)
+                            {
+                                @foreach (var listasubraca in @ViewBag.listasubraca)
+                                {
+                                    if ((@Model.IdSubRaca == listasubraca.IdSubRaca && listasubraca.IdRaca == listaraca.IdRaca &&
+                                    @Model.IdSubRaca != null) || (@Model.IdRaca == listaraca.IdRaca && @Model.IdSubRaca == null))
+                                    {
+                                        <input type="text" class="w-100" readonly value="@listaraca.Nome - @listasubraca.Nome"
+                            data-bs-toggle="modal" data-bs-target="#_DetalheRacaModal">
+                                        <partial name="~/Views/Raca/_DetalheRacaModal.cshtml"></partial>
+                                    }
+                                }
+                            }
+                        }
+                        @if (@Model.IdRaca == null)
+                        {
+                            <input  type="text" class="w-100" readonly data-bs-toggle="modal" data-bs-target="#_EscolherRacaModal">
+                        }
+                        <partial name="~/Views/Raca/_EscolherRacaModal.cshtml"></partial>
+                        <button class="texto-conteudo text-left bg bg-primary rounded-pill my-2 op-50 position-relative border border-dark border-1" 
+                        data-bs-toggle="tooltip" 
+                        data-bs-placement="bottom"
+                        data-bs-title="A raça do seu personagem. Cada uma possui uma particularidade que a torna única, como seu tamanho, deslocamento, características inatas, e muito mais! Lembre-se: Não existe uma nenhuma raça superior à outra, em termos práticos, apenas aspectos distintos que as fazem ideias para certos cenários. Confira a página de raças para mais informações"
+                        >RAÇA<span class="position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger">?</span>
+                        </button>
+                    </div>
+                </div>
+                @* Antecedente+Alinhamento *@
+                <div class="col py-3">
+                    <div class="col row">
+                        @* Antecedente *@
+                        <div class="col">
+                            @foreach (var listaantecedente in @ViewBag.listaantecedente)
+                            {
+                                if (@Model.IdAntecedente == listaantecedente.IdAntecedente)
+                                {
+                                    <input type="text" size="25" readonly value="@listaantecedente.Nome" data-bs-toggle="modal"
+                                data-bs-target="#_DetalheAntecedenteModal">
+                                    <partial name="~/Views/Antecedente/_DetalheAntecedenteModal.cshtml"></partial>
+                                }
+                            }
+                            @if (@Model.IdAntecedente == null)
+                            {
+                                <input type="text" size="25" readonly data-bs-toggle="modal"
+                                data-bs-target="#_EscolherAntecedenteModal">
+                                <partial name="~/Views/Antecedente/_EscolherAntecedenteModal.cshtml"></partial>
+                            }
+                            <div>
+                                <button class="texto-conteudo text-left bg bg-primary rounded-pill my-2 op-50 position-relative border border-dark border-1"
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="bottom"
+                            data-bs-title="O que seu personagem fazia antes das aventuras presentes começarem. Se era um órfão solitário; um comerciante conhecido; um soldado ou um trombadinha. Você decide seu passado! Os antecedentes lhe garantem características próprias e podem conferir itens, proficiências e até idiomas adicionais. Confira a página de antecedentes para mais detalhes!"
+                            >ANTECEDENTE<span class="position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger">?</span>
+                            </button>
+                            </div>
+                        </div>
+                        @* Alinhamento *@
+                        <div>
+                            @if (@Model.Tendencia == "")
+                            {
+                                <input type="text" size="25" placeholder="Alinhamento" readonly data-bs-toggle="modal"
+                                data-bs-target="#_EscolherTendenciaModal">
+                                <partial name="_EscolherTendenciaModal"></partial>
+                            }
+                            <partial name="_DetalheTendencia"></partial>
+                            <div>
+                                <button class="texto-conteudo text-left bg bg-primary rounded-pill my-2 op-50 position-relative border border-dark border-1" data-bs-toggle="tooltip"
+                                data-bs-placement="bottom"
+                                data-bs-title="O que define a personalidade do seu personagem perante a sociedade. Se seu personagem segue as regras, segue apenas quando o convém ou não liga para elas, ele será Leal, Neutro ou Caótico, respectivamente. Se ele tem atitudes bondosas, é bom quando o convém ou é um agente do mal, será Bom, Neutro ou Mal, respectivamente"
+                                >ALINHAMENTO<span class="position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger">?</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row gy-4 gx-4 mt-1">
+        <div class="col-4">
+            @* Atributos + Iniciativa + B.Proficiencia + Salvaguarda + Pericia *@
+            <div class="row gx-5 ms-1">
+                @* Atributos *@
+                <div class="row bg bg-fundo col-4 p-1 mt-0 border border-dark border-1 rounded position-relative"
+                    data-bs-toggle="tooltip" 
+                    data-bs-placement="top"
+                    data-bs-title="Os pontos referentes às condições físicas e mentais de seu personagem. Força representa sua força física; Destreza é sua habilidade manual e agilidade; Constituição refere-se à sua saúde e vigor; Inteligência é seu conhecimento adquirido por estudos; Sabedoria é seu conhecimento de vida, baseado em observações; Carisma é sua habilidade conversacional e capacidade de convencimento. Quanto mais alto, mais influência positiva destes atributos seu personagem terá; quanto mais baixo, menos influência positiva, até que pode ser afetado negativamente, como ser alguém muito fraco, desajeitado, fatigado, desprovido de inteligência, inocente ou que não convence ninguém (geralmente, alguns jogadores até encarariam como desprovido de beleza física). Junto a eles, encontram-se os modificadores, que são valores tabelados com base no quanto de atributo seu personagem possui. O modificador é utilizado em testes de salvaguarda, perícias, armas e armaduras, como modo de aumentar o valor final da rolagem ou o valor passivo de um destes.">
+                    <partial name="~/Views/Atributo/_EscolherAtributoModal.cshtml"></partial>
+                    <partial name="~/Views/Atributo/_AlterarAtributoModal.cshtml"></partial>
+                    <partial name="~/Views/Atributo/_DetalheAtributo.cshtml"></partial>
+                    <span class="w-15 position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger">?</span>
+                </div>
+                @* Iniciativa + B.Proficiencia + Salvaguarda + Pericia *@
+                <div class="col-8">
+                    <div class="row row-cols-1 bg bg-fundo ms-2 border border-dark border-1 rounded">
+                        @* INSPIRAÇÃO *@
+                        <div class="col px-2 m-2 w-100">
+                            <input type="text" value="@Model.ModificadorDestreza" size="1" class="border-dark border border-1 rounded rounded-circle py-2 text-center">
+                            <button class="texto-conteudo text-left bg bg-primary rounded-pill my-2 op-50 position-relative border border-dark border-1"
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="top"
+                            data-bs-title="Inspiração é um elemento narrativo concedido pelo mestre com base em caráteres subjetivos decididos por ele mesmo. Por exemplo, caso ele ache que sua interpretação foi muito boa, tomou uma boa decisão ou simplesmente quer entregar um ponto de inspiração para algum jogador. A Inspiração é um recurso que pode ser usado em situações em que o mestre permitir, mas geralmente é utilizado em rolagens de ataque ou testes para realizar uma ação, facilitando um resultado positivo ao jogador."
+                            >INSPIRAÇÃO<span class="position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger">?</span>
+                            </button>
+                        </div>
+                        @* B.Proficiencia *@
+                        <div class="col px-2 m-2 w-100">
+                            <input type="text" class="border-dark border border-1 rounded rounded-circle py-2 text-center" size="1" asp-for="@Model.BonusProficiencia" readonly>
+                            <button class="texto-conteudo text-left bg bg-primary rounded-pill my-2 op-50 position-relative border border-dark border-1"
+                            data-bs-toggle="tooltip" 
+                            data-bs-placement="top"
+                            data-bs-title="O Bônus de Proficiência é um valor tabelado com base no nível de seu personagem. Ele serve para, caso proficiente em salvaguarda, perícias ou armas, somar ao valor na rolagem de teste, aumentando a probabilidade de sucesso"
+                            >PROEFICIÊNCIA<span class="position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger">?</span>
+                            </button>
+                        </div>
+                    </div>
+                    @* Salvaguardas *@
+                    <div class="col w-100 px-2 border border-1 border-dark m-2 rounded bg bg-fundo position-relative"
+                        data-bs-toggle="tooltip" 
+                        data-bs-placement="top"
+                        data-bs-title="Salvaguardas são os testes de resistência que seu personagem poderá ter que fazer para superar um ataque ou um dano que pode ser inflingido, tendo como base um dos atributos. Caso seja proficiente em um teste de salvaguarda, receberá o bônus de proficiência">
+                        <partial name="~/Views/Personagem/_Salvaguarda.cshtml"></partial>
+                        <span class="position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger">?</span>
+                    </div>
+                    @* Pericia *@
+                    <div class="col w-100 px-2 m-2 position-relative">
+                        <partial name="~/Views/Pericia/_DetalhePericia.cshtml"></partial>
+                        <partial name="~/Views/Pericia/_EscolherPericiaModal.cshtml"></partial>
+                       
+                    </div>
+                </div>
+                <div class="row border border-1 border-dark w-100 my-3 rounded bg bg-fundo">
+                @* Percepcao Passiva *@
+                    <div class="col-2 py-1">
+                        @if (Model.Percepcao is true)
+                        {
+                            <input type="text" size="1" readonly class="text-center rounded border border-1 border-dark"
+                            value='@(Model.ModificadorSabedoria+10+Model.BonusProficiencia)'>
+                        }
+                        else
+                        {
+                            <input type="text" size="1" readonly class="text-center rounded border border-1 border-dark" value='@(Model.ModificadorSabedoria+10)'>
+                        }
+                    </div>
+                    <div class="col">
+                        <p class="text-uppercase texto-conteudo m-auto pt-2">Percepção Passiva (Sabedoria)</p>
+                    </div>
+                </div>
+                <div class="row w-100 bg bg-fundo rounded border border-1 border-dark">
+                    <div class="col p-3 pt-4 ">
+                        <textarea rows="13" readonly class="w-100 rounded border border-1 border-dark">
+                        @foreach (var listaidiomapersonagem in @ViewBag.listaidiomapersonagem)
+                        {
+                            @foreach (var listaidioma in @ViewBag.listaidioma)
+                            {
+                                @if (listaidioma.IdIdioma == listaidiomapersonagem.IdIdioma && @Model.IdPersonagem == listaidiomapersonagem.IdPersonagem)
+                                {
+                                    @Html.Raw(@listaidioma.Nome + ", ")
+                                }
+                            }
+                        }
+                        @foreach(var listaclasse in @ViewBag.listaclasse)
+                        {
+                            @if(listaclasse.IdClasse == @Model.IdClasse)
+                            {
+                                @Html.Raw(@listaclasse.Proficiencia)
+                            }
+                        }
+
+                    </textarea>
+                    <label class="text-uppercase texto-conteudo d-block text-center">Idiomas e outras proeficiências</label>
+                    </div>
+                    
+                </div>
+            </div>            
+        </div>
+        <div class="col-4">
+            <div class="row border border-1 border-dark rounded bg bg-fundo w-100 p-0 m-0">
+                <div class="row row-cols-3 mx-auto gy-2 mb-2">
+                    <div class="col CA bg bg-white border border-dark border-1">
+                        <div class="text-center position-relative"
+                        data-bs-toggle="tooltip" 
+                        data-bs-placement="top"
+                        data-bs-title="'CA' é a Classe de Armadura de seu personagem. Trata-se do quão protegido seu personagem é contra os ataques dos inimigos">
+                            <p class="texto-conteudo pt-2">CA</p>
+                            <span class="position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger" style="z-index: 3">?</span>
+                        </div>
+                        
+                        <div class="">
+                            @foreach (var listapersonagemarmadura in @ViewBag.listapersonagemarmadura)
+                            {
+                                @foreach (var listaarmadura in @ViewBag.listaarmadura)
+                                {
+                                    @if (Model.IdPersonagem == listapersonagemarmadura.IdPersonagem &&
+                                listapersonagemarmadura.IdArmadura == listaarmadura.IdArmadura &&
+                                listapersonagemarmadura.IsEquipada == true)
+                                    {
+                                        @if (listaarmadura.IdArmadura < 4)
+                                        {
+                                            <p class="text-center mb-0">@(listaarmadura.ClassedeArmadura+@Model.ModificadorDestreza)&#8205;</p>
+                                        }
+                                        else if (listaarmadura.IdArmadura < 9)
+                                        {
+                                            @if (@Model.ModificadorDestreza > 2)
+                                            {
+                                                <p class="text-center mb-0">@(listaarmadura.ClassedeArmadura+2)</p>
+                                            }
+                                            else
+                                            {
+                                                <p class="text-center mb-0">@(listaarmadura.ClassedeArmadura+Model.ModificadorDestreza)&#8205;</p>
+                                            }
+                                        }
+                                        else if (listaarmadura.IdArmadura < 13)
+                                        {
+                                            <p class="text-center mb-0">@(listaarmadura.ClassedeArmadura)&#8205;</p>
+                                        }
+                                        
+                                    }       
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="col bg bg-white border border-dark border-1">
+                        <div class="w-100 text-center position-relative"
+                        data-bs-toggle="tooltip" 
+                        data-bs-placement="top"
+                        data-bs-title="Iniciativa é o valor que define sua a ordem de jogadas durante rodadas de ataque. É mensurado pelo seu modificador de destreza + o valor rolado no dado">
+                            <p class="texto-conteudo pt-2" >Iniciativa</p>
+                            <span class="position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger" style="z-index: 3">?</span>
+                        </div>
+                        <div class="w-100 text-center w-50 m-auto">
+                            <p class="text-center">@Html.Raw((Model.ModificadorDestreza+"&#8205;")) </p>
+                        </div>
+                    </div>
+                    <div class="col bg bg-white border border-dark border-1 position-relative">
+                        <div class="w-100 text-center"
+                        data-bs-toggle="tooltip" 
+                        data-bs-placement="top"
+                        data-bs-title="O deslocamento trata da distância máxima que pode ser percorrida pelo seu personagem durante rodadas de movimento, ser serem sofridas alterações anômalas no movimento do mesmo">
+                            <p class="texto-conteudo pt-2">Deslocamento</p>
+                            <span class="position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger">?</span>
+                        </div>
+                        <div class="w-100 text-center">
+                            @foreach (var listaraca in @ViewBag.listaraca)
+                            {
+                                @if (listaraca.IdRaca == Model.IdRaca)
+                                {
+                                    <p class="text-center">@(listaraca.Deslocamento)&#8205</p>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-2 mx-auto py-3 text-center">
+                    <div class="col bg bg-white mx-auto border border-dark border-1">
+                        @if(@Model.IdClasse is not null && @Model.ModificadorConstituicao is not null)
+                        {
+                            <form method="POST" id="form_setVidaTotal" asp-action="setVidaTotal" asp-controller="Personagem">
+                                @{
+                                    int DadoVida = 0;
+                                }
+                                <input type="hidden" asp-for="@Model.IdPersonagem">
+                                <input type="hidden" value="@Model.Classe.DadoVida" asp-for="@DadoVida">
+                            </form>
+                        }
+                        <label>Pontos de Vida</label>
+                        <div class="row d-flex" >
+                            <div class="col mx-auto">
+                                <form method="POST" id="form_setVidaAtual" asp-action="setVidaAtual" asp-controller="Personagem">
+                                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                                    <input id="input_pvAtual" type="number" class="border-0 mt-1 ms-2 ps-0 w-100 text-end" onfocusout="submit_form_setVidaAtual()" asp-for="@Model.VidaAtual">
+                                </form>
+                            </div>
+                            <div class="col">
+                                <p class="lead text-start" onclick="submit_form_setVidaTotal()">/@Model.VidaTotal</p>
+                            </div>
+                            
+                            <script>
+                                function submit_form_setVidaTotal()
+                                {
+                                    document.getElementById("form_setVidaTotal").submit();
+                                }
+                                function submit_form_setVidaAtual()
+                                {
+                                    document.getElementById("form_setVidaAtual").submit();
+                                }
+                            </script>
+                        </div>
+                    </div>
+                    <div class="col float-startbg bg-light text-center border border-dark border-1">
+                        <p class="w-100 text-left">Dado de Vida</p>
+                        <div>
+                            @foreach (var listaclasse in @ViewBag.listaclasse)
+                            {
+                                @if (listaclasse.IdClasse == Model.IdClasse)
+                                {
+                                    <label class="texto-2 m-auto">@Html.Raw("D"+@listaclasse.DadoVida)</label>
+                                }
+                            }
+                        </div>
+                    </div>
+                </div>
+                <div class="row row-cols-1 col text-center mx-auto mb-3">
+                    <div class="col bg bg-light border border-dark border-1">
+                        <div>
+                            <span class="texto-conteudo">SUCESSOS</span>
+                            <form id="post_bemsucedido" method="POST" asp-action="Salvaguarda" asp-controller="Personagem">
+                                <input onchange='submit(document.getElementById("post_bemsucedido"))' type="range" class="form-range my-0 py-0" min="0" max="3" steps="1" asp-for="@Model.TestesBemSucedidos">
+                                <input type="hidden" asp-for="@Model.IdPersonagem">
+                            </form>
+                        </div>
+                        <div>
+                            <span class="texto-conteudo">FRACASSOS</span>
+                            <form id="post_malsucedido" method="POST" asp-action="Salvaguarda" asp-controller="Personagem">
+                                <input onchange='submit(document.getElementById("post_malsucedido"))' type="range" class="form-range my-0 py-0" min="0" max="3" steps="1" asp-for="@Model.TestesMalSucedidos">
+                                <input type="hidden" asp-for="@Model.IdPersonagem">
+                            </form>
+                        </div>
+                        <div>
+                            <span class="texto-conteudo">SALVAGUARDA<span style="font-size: 0.5vw">CONTRA</span>MORTE</span>
+                        </div>
+                    </div> 
+                </div>
+            </div>
+            <div class="row my-2 mx-0 bg bg-fundo border border-1 border-dark rounded w-100">
+                <table class="table table-less">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Bônus</th>
+                            <th>Dano/Tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var listapersonagemarma in @ViewBag.listapersonagemarma)
+                        {
+                            @foreach (var listaarma in @ViewBag.listaarma)
+                            {
+                                if (listapersonagemarma.IdArma == listaarma.IdArma && listapersonagemarma.IdPersonagem == @Model.IdPersonagem && listapersonagemarma.IsEquipada == true)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="border border-1 border-dark bg-secondary w-100" value=@listaarma.Nome>
+                                        </td>
+                                        <td>
+                                            @foreach (var listaproficienciaarma in @ViewBag.listaproficienciaarma)
+                                            {
+                                                @if (listaproficienciaarma.IdArma == listaarma.IdArma && listaproficienciaarma.IdPersonagem == @Model.IdPersonagem)
+                                                {
+                                                    @if (listaarma.IdTipoArma == 2 || listaarma.IdTipoArma == 4)
+                                                    {
+                                                        <input type="text" class="border border-1 border-dark bg-secondary w-100" value='@(Model.BonusProficiencia+Model.ModificadorDestreza)'>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="text" class="border border-1 border-dark bg-secondary w-100" value='@(Model.BonusProficiencia+Model.ModificadorForca)'>
+                                                    }
+                                                }
+                                                @if ((listaproficienciaarma.IdArma == listaarma.IdArma && listaproficienciaarma.IdPersonagem == @Model.IdPersonagem) is null)
+                                                {
+                                                    @if (listaarma.IdTipoArma == 2 || listaarma.IdTipoArma == 4)
+                                                    {
+                                                        <input type="text" class="border border-1 border-dark bg-secondary w-100" value='@(Model.ModificadorDestreza)'>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="text" class="border border-1 border-dark bg-secondary w-100" value='@(Model.ModificadorForca)'>
+                                                    }
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            <input type="text" class="border border-1 border-dark bg-secondary w-100" value="@listaarma.DadoDano">
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                        <tr>
+                            <td><input type="text" readonly class="border border-1 border-dark bg-secondary w-100"></td>
+                            <td><input type="text" readonly class="border border-1 border-dark bg-secondary w-100"></td>
+                            <td><input type="text" readonly class="border border-1 border-dark bg-secondary w-100"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div>
+                    <p class="texto-conteudo text-center">ARMAS</p>
+                </div>
+            </div>
+            <div class="row bg bg-fundo border border-1 border-dark rounded p-3 w-100 m-0">
+                <div class="col-4 p-0 text-center m-0">
+                    <partial name="~/Views/Personagem/_EscolherDinheiroModal.cshtml"></partial>
+                    <div class="position-relative" style="position: relative"
+                    data-bs-toggle="tooltip"
+                    data-bs-placement="top"
+                    data-bs-title="Valores monetários padrões do universo de Dungeons and Dragons. Referem-se, respectivamente, a: Peças
+    de Cobre, Peças de Prata, Peças de Electra, Peças de Ouro, Peças de Platina. Cada peça subsequente equivale a 10
+    peças imediatamente anteriores. Uma Peça de Platina equivale 10 Peças de Ouro, que equivalem unitariamente a 10
+    Peças de Electra, e assim sucessivamente">
+                        <partial name="~/Views/Personagem/_DetalheDinheiro.cshtml"></partial>
+                    </div>
+                    <span style="position: absolute" class="position-absolute top-0 start-0 translate-middle rounded-pill badge bg-danger">?</span>
+                </div>
+                <div class="col-8 p-0">
+                    <partial name="~/Views/Ficha/_EquipamentoPartial.cshtml"></partial>
+                    <partial name="~/Views/Item/_EscolherItemModal.cshtml"></partial>
+                    <partial name="~/Views/Item/_AlterarItemModal.cshtml"></partial>
+                </div>
+                <div class="col-12">
+                    <p class="text-center text-uppercase texto-conteudo">Equipamento</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-4 ps-3">
+            <div class="row bg bg-fundo p-3 pt-4 border border-1 border-dark rounded">
+
+                <div class="col-12  p-0" data-bs-target="#_AlterarTracoModal" data-bs-toggle="modal">
+                    <textarea rows="5" class="w-100 rounded border border-1 border-dark" readonly>@Model.Traco</textarea>
+                    <label class="text-uppercase texto-conteudo d-block text-center">Traços de Personalidade</label>
+                </div>
+                <form method="POST" asp-action="AlterarTraco" asp-controller="Personagem">
+                    <partial name="~/Views/Personagem/_AlterarTracoModal.cshtml"></partial>
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                </form>
+
+                <div class="col-12  p-0" data-bs-target="#_AlterarIdealModal" data-bs-toggle="modal">
+                    <textarea rows="5" class="w-100 rounded border border-1 border-dark" readonly>@Model.Ideal</textarea>
+                    <label class="text-uppercase texto-conteudo d-block text-center">Ideais</label>
+                </div>
+                <form method="POST" asp-action="AlterarIdeal" asp-controller="Personagem">
+                    <partial name="~/Views/Personagem/_AlterarIdealModal.cshtml"></partial>
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                </form>
+
+                <div class="col-12  p-0" data-bs-target="#_AlterarVinculoModal" data-bs-toggle="modal">
+                    <textarea rows="5" class="w-100 rounded border border-1 border-dark" readonly>@Model.Vinculo</textarea>
+                    <label class="text-uppercase texto-conteudo d-block text-center">Vínculos</label>
+                </div>
+                <form method="POST" asp-action="AlterarVinculo" asp-controller="Personagem">
+                    <partial name="~/Views/Personagem/_AlterarVinculoModal.cshtml"></partial>
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                </form>
+
+                <div class="col-12  p-0" data-bs-target="#_AlterarDefeitoModal" data-bs-toggle="modal">
+                    <textarea rows="5" class="w-100 rounded border border-1 border-dark" readonly>@Model.Defeito</textarea>
+                    <label class="text-uppercase texto-conteudo d-block text-center">Defeitos</label>
+                </div>
+                <form method="POST" asp-action="AlterarDefeito" asp-controller="Personagem">
+                    <partial name="~/Views/Personagem/_AlterarDefeitoModal.cshtml"></partial>
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                </form>
+
+            </div>
+            <div class="row border border-1 border-dark rounded bg bg-fundo">
+                <div class="col-12 p-3 pt-4">
+                    @{
+                        string texto = "";
+                        @foreach (var listahabilidaderaca in @ViewBag.listahabilidaderaca)
+                        {
+                            @foreach (var listahabilidade in @ViewBag.listahabilidade)
+                            {
+                                @if (listahabilidaderaca.IdRaca == @Model.IdRaca && listahabilidade.IdHabilidadeRacial ==
+                           listahabilidaderaca.IdHabilidadeRacial)
+                                {
+                                    texto += listahabilidade.Nome + ", ";
+                                }
+                            }
+                        }
+                        @foreach (var listahabilidadesubraca in @ViewBag.listahabilidadesubraca)
+                        {
+                            @foreach (var listahabilidade in @ViewBag.listahabilidade)
+                            {
+                                @if (listahabilidadesubraca.IdSubRaca == @Model.IdSubRaca && listahabilidade.IdHabilidadeRacial ==
+                           listahabilidadesubraca.IdHabilidadeRacial)
+                                {
+                                    texto += listahabilidade.Nome + ", ";
+                                }
+                            }
+                        }
+                        <textarea rows="10" class="w-100 rounded border border-1 border-dark" readonly data-bs-toggle="modal"
+                            data-bs-target="#_CaracteristicaModal">@texto</textarea>
+                    }
+                    <label class="text-uppercase texto-conteudo d-block text-center">Características e Talentos</label>
+                    <partial name="~/Views/Personagem/_CaracteristicaModal.cshtml"></partial>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+    const tooltipTriggerList = document.querySelectorAll('[data-bs-toggle="tooltip"]')
+    const tooltipList = [...tooltipTriggerList].map(tooltipTriggerEl => new bootstrap.Tooltip(tooltipTriggerEl))
+</script>
+@if(@Model.Morto == true){
+    <script>
+        document.getElementById('container_telafrontal').setAttribute('data-bs-toggle', 'modal');
+        document.getElementById('container_telafrontal').setAttribute('data-bs-target', '#Morto');
+    </script>
+    <partial name="~/Views/Ficha/Morto.cshtml"></partial>
+}

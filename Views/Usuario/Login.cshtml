@@ -1,0 +1,20 @@
+@model LoginViewModel
+<link rel="stylesheet" href="~/css/login.css">
+
+<form asp-action="Login" aps-controller="Usuario" method="POST">
+  <div class="login-page">
+
+    <div class="form">
+
+      <img src="~/png/logo1.png" width="250">
+
+      <span class="login-form">
+        <input type="text" asp-for="@Model.Email" placeholder="username" />
+        <input type="password" asp-for="@Model.Senha" placeholder="password" />
+        <button type="submit">Login</button>
+        <p class="message"> <a asp-action="Cadastrar" asp-controller="Usuario">Cadastrar-se</a></p>
+      </span>
+    </div>
+  </div>
+
+</form>

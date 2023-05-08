@@ -1,0 +1,92 @@
+@model Personagem
+<script src="~/js/classes.js"></script>
+<link rel="stylesheet" href="~/css/EscolherClasseModal.css">
+
+<div class="modal fade" id="_EscolherClasseModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+  role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title texto-2" id="modalTitleId">Escolha uma Classe</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form method="POST" asp-action="EscolherClasse" asp-controller="Classe">
+          <input type="hidden" asp-for="@Model.IdPersonagem">
+
+          <center>
+            <div class="box1">
+              <div style="justify-self: center; clear:right; position:static">
+                <h5 class="texto-1">Classes:</h5>
+              </div>
+              <div style="justify-self:center; clear:none; position:relative;">
+                <div onclick="classes()">
+
+                  <div class="d-inline-block" style="text-align: left; vertical-align: super; margin:10px">
+                    @foreach (var item in @ViewBag.listaclasse)
+                    {
+                      if (item.IdClasse % 2 != 0)
+                      {
+                        <input id='@("Classe" + item.IdClasse)' type="radio" name="IdClasse" value=@item.IdClasse
+                      class="radioclasse">
+                        <label for="@item.Nome">@item.Nome</label><br>
+                      }
+                    }
+                  </div>
+                  <div class="d-inline-block" style="text-align: left; vertical-align: super">
+                    @foreach (var item in @ViewBag.listaclasse)
+                    {
+                      if (item.IdClasse % 2 == 0)
+                      {
+                        <input id='@("Classe" + item.IdClasse)' type="radio" name="IdClasse" value=@item.IdClasse
+                      class="radioclasse">
+                        <label for="@item.Nome">@item.Nome</label><br>
+                      }
+                    }
+                  </div>
+                  <br>
+                  <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
+                  <span asp-validation-for="@Model.IdClasse"></span>
+                </div>
+              </div>
+            </div>
+          </center>
+          <hr>
+          @foreach (var listaclasse in @ViewBag.listaclasse)
+          {
+            <div id="@(listaclasse.Nome)classe" class="classes text-left ms-1">
+              <h5 class="texto-1">@listaclasse.Nome</h5>
+              <h6 class="texto-2">Dado de vida:</h6>
+              <p class="texto-conteudo">@Html.Raw("D" + @listaclasse.DadoVida)</p>
+              <br>
+              <h6 class="texto-2">Equipamentos:</h6>
+              <p class="texto-conteudo">@listaclasse.Equipamento</p>
+              <br>
+              <h6 class="texto-2">Proficiências:</h6>
+              <p class="texto-conteudo">@listaclasse.Proficiencia</p>
+              <br>
+              <hr>
+              @if (listaclasse.IdClasse == 1)
+              {
+                <partial name="~/Views/Classe/_TabelaBarbaro.cshtml"></partial>
+              }
+               else if (listaclasse.IdClasse == 2)
+              {
+                <partial name="~/Views/Classe/_TabelaBardo.cshtml"></partial>
+              }
+                @foreach (var listaclassetracosdeclasse in @ViewBag.listaclassetracosdeclasse)
+                {
+                  if (listaclassetracosdeclasse.IdClasse == listaclasse.IdClasse)
+                  {
+                    <h6 class="texto-2">@listaclassetracosdeclasse.TracodeClasse.Nome</h6>
+                    <p class="texto-conteudo">@listaclassetracosdeclasse.TracodeClasse.HabilidadeTracodeClasse</p>
+                    <hr>
+                  }
+                }
+            </div>
+          }
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

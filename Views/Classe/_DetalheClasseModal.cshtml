@@ -1,0 +1,67 @@
+@model Personagem;
+<div class="modal fade" id="_DetalheClasseModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="display-5 texto-2" class="modal-title" id="modalTitleId">Detalhe de Classe: @Model.Classe.Nome</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @foreach (var listaclasse in @ViewBag.listaclasse)
+                    {
+                        if (@Model.IdClasse == listaclasse.IdClasse)
+                        {
+                            <div class="row col">
+                                <div>
+                                    <h5 class="display-5 texto-1">@listaclasse.Nome</h5>
+                                </div>
+                                <div class="">
+                                    <h6 class="display-6 texto-2">Dado de vida:</h6>
+                                            <p class="lead texto-conteudo">@("d"+@listaclasse.DadoVida) por nível de @listaclasse.Nome</p>
+                                </div>
+                                <div>
+                                    <h6 class="display-6 texto-2">Pontos de vida nos níveis subsequêntes:</h6>
+                                            <p class="lead texto-conteudo">@(@listaclasse.DadoVida + "+ ModificadorConstituicao")</p>
+                                </div>
+                            </div>
+                            <hr>
+                            if (@Model.IdClasse == 1)
+                            {
+                                <div class="row">
+                                    <div class="col-9 m-auto">
+                                        <partial name="_TabelaBarbaro.cshtml"></partial>
+                                    </div>
+                                </div>
+                            }
+                            else if (@Model.IdClasse == 2)
+                            {
+                                <div class="row">
+                                    <div class="col-9 m-auto">
+                                        <partial name="_TabelaBardo.cshtml"></partial>
+                                    </div>
+                                </div>
+                            }
+                            <hr>
+                            <div class="row">
+                                    @foreach (var listaclassetracosdeclasse in @ViewBag.listaclassetracosdeclasse)
+                                    {
+                                        if (listaclassetracosdeclasse.IdClasse == @Model.IdClasse)
+                                        {
+                                            <div class="col-12 m-auto">
+                                                <p class="texto-conteudo2">@listaclassetracosdeclasse.TracodeClasse.HabilidadeTracodeClasse</p>
+                                            </div>
+                                        }
+                                    }
+                            </div>
+                        }
+                    }
+
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

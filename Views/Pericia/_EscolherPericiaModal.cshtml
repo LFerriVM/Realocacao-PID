@@ -1,0 +1,142 @@
+@model Personagem;
+<div class="modal fade" id="_EscolherPericiaModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">Perícias</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" asp-action="EscolherPericia" asp-controller="Pericia">
+                    <div>
+                        @if (Model.IdClasse == 1)
+                        {
+
+                            <h6>Escolha duas entre:</h6>
+                            <br>
+                            <p class="lead">Adestramento, Atletismo, Intimidação, Natureza, Percepção e Sobrevivência</p>
+                        }
+                        else if(Model.IdClasse == 2){
+                            <h6>Escolha três:</h6>
+                            <br>
+                            <p class="lead">Acrobacia, Adestramento, Arcanismo, Atletismo, Atuação, Enganação, Furtividade, História, Intimidação, Intuição, Investigação, Medicina, Natureza, Percepção, Persuasão, Prestidigitação, Religião e Sobrevivência</p>
+                        }
+                        else if(Model.IdClasse == 3){
+                            <h6>Escolha duas entre:</h6>
+                            <br>
+                            <p class="lead">Arcanismo, Enganação, História, Intimidação, Investigação, Natureza e Religião</p>
+                        }
+                        else if(Model.IdClasse == 4){
+                            <h6>Escolha duas entre:</h6>
+                            <br>
+                            <p class="lead">História, Intuição, Medicina, Persuasão e Religião</p>
+                        }
+                        else if(Model.IdClasse == 5){
+                            <h6>Escolha duas entre: </h6>
+                            <br>
+                            <p class="lead">Adestramento, Arcanismo, Intuição, Medicina, Natureza, Percepção, Religião e Sobrevivência</p>
+                        }
+                        else if(Model.IdClasse == 6){
+                            <h6>Escolha duas entre: </h6>
+                            <p class="lead">Arcanismo, Enganação, Intimidação, Intuição, Persuasão e Religião</p>
+                        }
+                        else if(Model.IdClasse == 7){
+                            <h6>Escolha duas entre:</h6>
+                            <br>
+                            <p class="lead">Acrobacia, Adestramento, Atletismo, História, Intimidação, Intuição, Percepção e Sobrevivência</p>
+                        }
+                        else if(Model.IdClasse == 8){
+                            <h6>Escolha quatro dentre:</h6>
+                            <br>
+                            <p class="lead">Acrobacia, Atletismo, Atuação, Enganação, Furtividade, Intimidação, Intuição, Investigação, Percepção, Persuasão e Prestidigitação</p>
+                        }
+                        else if(Model.IdClasse == 9){
+                            <h6>Escolha duas dentre:</h6>
+                            <br>
+                            <p class="lead">Arcanismo, História, Intuição, Investigação, Medicina e Religião</p>
+                        }
+                        else if(Model.IdClasse == 10){
+                            <h6>Escolha duas dentre:</h6>
+                            <br>
+                            <p class="lead">Acrobacia, Atletismo, Furtividade, História, Intuição e Religião</p>
+                        }
+                        else if(Model.IdClasse == 11){
+                            <h6>Escolha duas dentre:</h6>
+                            <br>
+                            <p class="lead">Atletismo, Intimidação, Intuição, Medicina, Persuasão e Religião</p>
+                        }
+                        else if(Model.IdClasse == 12){
+                            <h6>Escolha três dentre:</h6>
+                            <br>
+                            <p class="lead">Adestramento, Atletismo, Furtividade, Intuição, Investigação, Natureza e Sobrevivência</p>
+                        }
+                        <input type="hidden" asp-for="@Model.IdPersonagem">
+                        <h6>Escolha as Perícia que desejar</h6>
+                        <br>
+                        <input type="checkbox" id='PericiaAcrobacia' asp-for="@Model.Acrobacia" value=@true>
+                        <label for='PericiaAcrobacia'>Acrobacia</label>
+                        <br>
+                        <input type="checkbox" id="PericiaLidarcomAnimais" asp-for="@Model.LidarcomAnimais" value=@true>
+                        <label for='PericiaLidarcomAnimais'>Adestramento</label>
+                        <br>
+                        <input type="checkbox" id="PericiaArcanismo" asp-for="@Model.Arcanismo" value=@true>
+                        <label for='PericiaArcanismo'>Arcanismo</label>
+                        <br>
+                        <input type="checkbox" id="PericiaAtletismo" asp-for="@Model.Atletismo" value=@true>
+                        <label for='PericiaAtletismo'>Atletismo</label>
+                        <br>
+                        <input type="checkbox" id="PericiaAtuacao" asp-for="@Model.Atuacao" value=@true>
+                        <label for='PericiaAtuacao'>Atuação</label>
+                        <br>
+                        <input type="checkbox" id="PericiaEnganacao" asp-for="@Model.Enganacao" value=@true>
+                        <label for='PericiaEnganacao'>Enganação</label>
+                        <br>
+                        <input type="checkbox" id="PericiaFurtividade" asp-for="@Model.Furtividade" value=@true>
+                        <label for='PericiaFurtividade'>Furtividade</label>
+                        <br>
+                        <input type="checkbox" id="PericiaHistoria" asp-for="@Model.Historia" value=@true>
+                        <label for='PericiaHistoria'>História</label>
+                        <br>
+                        <input type="checkbox" id="PericiaIntimidacao" asp-for="@Model.Intimidacao" value=@true>
+                        <label for='PericiaIntimidacao'>Intimidação</label>
+                        <br>
+                        <input type="checkbox" id="PericiaIntuicao" asp-for="@Model.Intuicao" value=@true>
+                        <label for='PericiaIntuicao'>Intuição</label>
+                        <br>
+                        <input type="checkbox" id="PericiaInvestigacao" asp-for="@Model.Investigacao" value=@true>
+                        <label for='PericiaInvestigacao'>Investigação</label>
+                        <br>
+                        <input type="checkbox" id="PericiaMedicina" asp-for="@Model.Medicina" value=@true>
+                        <label for='PericiaMedicina'>Medicina</label>
+                        <br>
+                        <input type="checkbox" id="PericiaNatureza" asp-for="@Model.Natureza" value=@true>
+                        <label for='PericiaNatureza'>Natureza</label>
+                        <br>
+                        <input type="checkbox" id="PericiaPercepcao" asp-for="@Model.Percepcao" value=@true>
+                        <label for='PericiaPercepcao'>Percepção</label>
+                        <br>
+                        <input type="checkbox" id="PericiaPersuasao" asp-for="@Model.Persuasao" value=@true>
+                        <label for='PericiaPersuasao'>Persuasão</label>
+                        <br>
+                        <input type="checkbox" id="PericiaPrestidigitacao" asp-for="@Model.Prestidigitacao" value=@true>
+                        <label for='PericiaPrestidigitacao'>Prestidigitação</label>
+                        <br>
+                        <input type="checkbox" id="PericiaReligiao" asp-for="@Model.Religiao" value=@true>
+                        <label for='PericiaReligiao'>Religião</label>
+                        <br>
+                        <input type="checkbox" id="PericiaSobrevivencia" asp-for="@Model.Sobrevivencia" value=@true>
+                        <label for='PericiaSobrevivencia'>Sobrevivência</label>
+                    </div>
+                    <div class="col text-center pt-2">
+                        <button type="submit" class="btn btn-primary">Save</button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

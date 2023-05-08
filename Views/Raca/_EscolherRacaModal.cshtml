@@ -1,0 +1,370 @@
+@model Personagem
+<script src="~/js/racas.js"></script>
+<link rel="stylesheet" href="~/css/EscolherRacaModal.css">
+<div class="modal fade" id="_EscolherRacaModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-xl">
+        <div class="modal-content">
+            
+            <div class="position-relative">
+                <form method="POST" asp-action="EscolherRaca" asp-controller="Raca">
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                    <div class="row p-2">
+                        <div class="col">
+                            <h1 class="modal-title display-4 texto-2" id="exampleModalLabel">Selecione a Raca</h1>
+                        </div>
+                        <div class="row row-cols">
+                            <div class="col">
+                                @foreach (var listaraca in ViewBag.listaraca)
+                                {
+                                    <div class="form-check">
+                                        <label class="form-check-label">
+                                            <input class="form-check-input" id='@("Raca"+@listaraca.IdRaca)' type="radio" name="IdRaca"
+                                        value="@listaraca.IdRaca" onclick="racas(this)">
+                                        @listaraca.Nome
+                                        </label>
+                                    </div>
+                                }
+                            </div>
+
+                            <div class="row row-cols-1 col">
+                                @foreach (var listaraca in ViewBag.listaraca)
+                                {
+                                    @if (listaraca.IdRaca == 1)
+                                    {
+                                        <div id="" class='row col esconder subracas text-left ms-1 @(listaraca.Nome)subracas'>
+                                            @foreach (var listasubraca in ViewBag.listasubraca)
+                                            {
+                                                @if (listasubraca.IdRaca == listaraca.IdRaca)
+                                                {
+                                                    <div class="col">
+                                                        <div class="form-check">
+                                                            <label for="" class="form-check-label">
+                                                                <input type="radio" class="form-check-input" id='@("Subraca"+listasubraca.IdSubRaca)' name="IdSubRaca" value="@listasubraca.IdSubRaca" onclick="subracas(this)">
+                                                            @listasubraca.Nome
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            }
+                                        </div>
+                                    }
+                                    @if (listaraca.IdRaca == 2)
+                                    {
+                                        <div class='row col esconder subracas text-left ms-1 @(listaraca.Nome)subracas'>
+                                            @foreach (var listasubraca in ViewBag.listasubraca)
+                                            {
+                                                @if (listasubraca.IdRaca == listaraca.IdRaca)
+                                                {
+                                                    <div class="col">
+                                                        <div class="form-check">
+                                                            <label for="" class="form-check-label">
+                                                                <input type="radio" class="form-check-input" id='@("Subraca"+listasubraca.IdSubRaca)' name="IdSubRaca" value="@listasubraca.IdSubRaca" onclick="subracas(this)">
+                                                            @listasubraca.Nome
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            }
+                                        </div>
+                                    }
+                                    @if (listaraca.IdRaca == 3)
+                                    {
+                                        <div class='row col esconder subracas text-left ms-1 @(listaraca.Nome)subracas'>
+                                            @foreach (var listasubraca in ViewBag.listasubraca)
+                                            {
+                                                @if (listasubraca.IdRaca == listaraca.IdRaca)
+                                                {
+                                                    <div class="col">
+                                                        <div class="form-check">
+                                                            <label for="" class="form-check-label">
+                                                                <input type="radio" class="form-check-input" id='@("Subraca"+listasubraca.IdSubRaca)' name="IdSubRaca" value="@listasubraca.IdSubRaca" onclick="subracas(this)">
+                                                            @listasubraca.Nome
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            }
+                                        </div>
+                                    }
+                                    @if (listaraca.IdRaca == 6)
+                                    {
+                                        <div class='row col esconder subracas text-left ms-1 @(listaraca.Nome)subracas'>
+                                            @foreach (var listasubraca in ViewBag.listasubraca)
+                                            {
+
+                                                @if (listasubraca.IdRaca == listaraca.IdRaca)
+                                                {
+                                                    <div class="col">
+                                                        <div class="form-check">
+                                                            <label for="" class="form-check-label">
+                                                                <input type="radio" class="form-check-input" id='@("Subraca"+listasubraca.IdSubRaca)' name="IdSubRaca" value="@listasubraca.IdSubRaca" onclick="subracas(this)">
+                                                            @listasubraca.Nome
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                }
+
+                                            }
+                                        </div>
+                                    }
+                                }
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="position-absolute top-12 end-12">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="text-end m-3">
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-body d-relative">
+                    @foreach (var listaraca in @ViewBag.listaraca)
+                    {
+                        string Habilidade = null;
+                        @if (listaraca.BonusConstituicao != null)
+                        {
+                            Habilidade = listaraca.BonusConstituicao + " de bônus de Constituição";
+                        }
+                        @if (listaraca.BonusForca != null)
+                        {
+                            if (Habilidade != null)
+                            {
+                                Habilidade = Habilidade + " e " + listaraca.BonusForca + " de bônus de Força";
+                            }
+                            else
+                            {
+                                Habilidade = listaraca.BonusForca + " de bônus de Força";
+                            }
+                        }
+                        @if (listaraca.BonusDestreza != null)
+                        {
+                            if (Habilidade != null)
+                            {
+                                Habilidade = Habilidade + " e " + listaraca.BonusDestreza + " de bônus de Destreza";
+                            }
+                            else
+                            {
+                                Habilidade = listaraca.BonusDestreza + " de bônus de Destreza";
+                            }
+                        }
+                        @if (listaraca.BonusInteligencia != null)
+                        {
+                            if (Habilidade != null)
+                            {
+                                Habilidade = Habilidade + " e " + listaraca.BonusInteligencia + " de bônus de Inteligência";
+                            }
+                            else
+                            {
+                                Habilidade = listaraca.BonusInteligencia + " de bônus de Inteligência";
+                            }
+                        }
+                        @if (listaraca.BonusSabedoria != null)
+                        {
+                            if (Habilidade != null)
+                            {
+                                Habilidade = Habilidade + " e " + listaraca.BonusSabedoria + " de bônus de Sabedoria";
+                            }
+                            else
+                            {
+                                Habilidade = listaraca.BonusSabedoria + " de bônus de Sabedoria";
+                            }
+                        }
+                        @if (listaraca.BonusCarisma != null)
+                        {
+                            if (Habilidade != null)
+                            {
+                                Habilidade = Habilidade + " e " + listaraca.BonusCarisma + " de bônus de Carisma";
+                            }
+                            else
+                            {
+                                Habilidade = listaraca.BonusCarisma + " de bônus de Carisma";
+                            }
+                        }
+
+
+                        <div id="@(listaraca.Nome)subracas" class="subracas text-left ms-1 row col-12">
+
+                            <div class="row col">
+                                <div class="col-6 me-0">
+                                    <div class="table-responsive">
+                                        <table class="table table-primary">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="texto-conteudo border border-dark border-1">Nome</th>
+                                                    <td class="texto-conteudo border border-dark border-1">@listaraca.Nome</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="texto-conteudo border border-dark border-1">Aumento no valor
+                                                        de
+                                                        habilidade:</th>
+                                                    <td class="texto-conteudo border border-dark border-1">@Habilidade</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="texto-conteudo border border-dark border-1">Tamanho</th>
+                                                    <td class="texto-conteudo border border-dark border-1">@listaraca.Tamanho</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="texto-conteudo border border-dark border-1">Idade</th>
+                                                    <td class="texto-conteudo border border-dark border-1">@listaraca.Idade</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="texto-conteudo border border-dark border-1">Deslocamento</th>
+                                                    <td class="texto-conteudo border border-dark border-1">
+                                                        @Html.Raw(@listaraca.Deslocamento+"m")</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="texto-conteudo border border-dark border-1">Tamanho</th>
+                                                    <td class="texto-conteudo border border-dark border-1">@listaraca.Tamanho</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="texto-conteudo border border-dark border-1">Idioma(s)</th>
+                                                    @if (listaraca.IdIdioma != 2)
+                                                    {
+                                                        <td class="texto-conteudo border border-dark border-1">Comum + @listaraca.Idioma.Nome
+                                                        </td>
+                                                    }
+                                                    else
+                                                    {
+                                                        <td class="texto-conteudo border border-dark border-1">@listaraca.Idioma.Nome</td>
+                                                    }
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+
+                                </div>
+                                @foreach (var listasubraca in @ViewBag.listasubraca)
+                                {
+                                    if (listasubraca.IdRaca == listaraca.IdRaca)
+                                    {
+                                        Habilidade = null;
+                                        @if (listasubraca.BonusConstituicao != null)
+                                        {
+                                            Habilidade = listasubraca.BonusConstituicao + " de bônus de Constituição";
+                                        }
+                                        @if (listasubraca.BonusForca != null)
+                                        {
+                                            if (Habilidade != null)
+                                            {
+                                                Habilidade = Habilidade + " e " + listasubraca.BonusForca + " de bônus de Força";
+                                            }
+                                            else
+                                            {
+                                                Habilidade = listasubraca.BonusForca + " de bônus de Força";
+                                            }
+                                        }
+                                        @if (listasubraca.BonusDestreza != null)
+                                        {
+                                            if (Habilidade != null)
+                                            {
+                                                Habilidade = Habilidade + " e " + listasubraca.BonusDestreza + " de bônus de Destreza";
+                                            }
+                                            else
+                                            {
+                                                Habilidade = listasubraca.BonusDestreza + " de bônus de Destreza";
+                                            }
+                                        }
+                                        @if (listasubraca.BonusInteligencia != null)
+                                        {
+                                            if (Habilidade != null)
+                                            {
+                                                Habilidade = Habilidade + " e " + listasubraca.BonusInteligencia + " de bônus de Inteligência";
+                                            }
+                                            else
+                                            {
+                                                Habilidade = listasubraca.BonusInteligencia + " de bônus de Inteligência";
+                                            }
+                                        }
+                                        @if (listasubraca.BonusSabedoria != null)
+                                        {
+                                            if (Habilidade != null)
+                                            {
+                                                Habilidade = Habilidade + " e " + listasubraca.BonusSabedoria + " de bônus de Sabedoria";
+                                            }
+                                            else
+                                            {
+                                                Habilidade = listasubraca.BonusSabedoria + " de bônus de Sabedoria";
+                                            }
+                                        }
+                                        @if (listasubraca.BonusCarisma != null)
+                                        {
+                                            if (Habilidade != null)
+                                            {
+                                                Habilidade = Habilidade + " e " + listasubraca.BonusCarisma + " de bônus de Carisma";
+                                            }
+                                            else
+                                            {
+                                                Habilidade = listasubraca.BonusCarisma + " de bônus de Carisma";
+                                            }
+                                            
+                                        }
+                                        <div id='@("SubRaca_div"+listasubraca.IdSubRaca)' class="col-6 me-0 subracas subracas2">
+                                            <div class="table-responsive">
+                                        <table class="table table-primary">
+                                            <tbody>
+                                                <tr>
+                                                    <th class="texto-conteudo border border-dark border-1">Nome</th>
+                                                    <td class="texto-conteudo border border-dark border-1">@listasubraca.Nome</td>
+                                                </tr>
+                                                <tr>
+                                                    <th class="texto-conteudo border border-dark border-1">Aumento no valor
+                                                        de
+                                                        habilidade:</th>
+                                                    <td class="texto-conteudo border border-dark border-1">@Habilidade</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                    <div class="table-responsive">
+                                        <table class="table table-primary">
+                                            <tbody>
+                                                @foreach (var listahabilidadesubraca in @ViewBag.listahabilidadesubraca)
+                                                {
+                                                    if (listahabilidadesubraca.IdSubRaca == listasubraca.IdSubRaca)
+                                                    {
+                                                        <tr class="">
+                                                            <th class="texto-conteudo border border-dark border-1">
+                                                                @listahabilidadesubraca.HabilidadeRacial.Nome</th>
+                                                            <td class="texto-conteudo border border-dark border-1">
+                                                                @listahabilidadesubraca.HabilidadeRacial.Descricao</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                        </div>
+                                    
+                                    }
+                                }
+                            <div class="table-responsive">
+                                        <table class="table table-primary">
+                                            <tbody>
+                                                @foreach (var listahabilidaderaca in @ViewBag.listahabilidaderaca)
+                                                {
+                                                    if (listahabilidaderaca.IdRaca == listaraca.IdRaca)
+                                                    {
+                                                        <tr class="">
+                                                            <th class="texto-conteudo border border-dark border-1">
+                                                                @listahabilidaderaca.HabilidadeRacial.Nome</th>
+                                                            <td class="texto-conteudo border border-dark border-1">
+                                                                @listahabilidaderaca.HabilidadeRacial.Descricao</td>
+                                                        </tr>
+                                                    }
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                            </div>
+                        </div>
+                    }
+            </div>
+        </div>
+    </div>
+</div>

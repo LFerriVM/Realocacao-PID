@@ -1,0 +1,149 @@
+@* @if(((@Model.Forca == 0) && (@Model.Destreza == 0) && (@Model.Constituicao == 0) && (@Model.Inteligencia == 0) && (@Model.Sabedoria == 0)&& (@Model.Carisma == 0)))
+{
+    <div class="rounded-3" data-bs-toggle="modal" data-bs-target="#_EscolherAtributoModal">
+        <div style="min-width:" class="border border-radius-2 border-dark rounded bg bg-white py-3 my-4">
+            <div class="text-center fs-6">
+                Força
+            </div>
+            <div class='text-center fs-2'>
+                @Model.Forca
+            </div>
+            <div class="text-center fs-6">
+                <span class="border border-3 rounded-pill border-dark w-25 d-inline-block">@Model.ModificadorForca</span>
+            </div>
+        </div>
+        <div style="min-width:" class="border border-radius-2 border-dark rounded bg bg-white py-3 my-4">
+            <div class="text-center fs-6">
+                Destreza
+            </div>
+            <div class='text-center fs-2'>
+                @Model.Destreza
+            </div>
+            <div class="text-center fs-6">
+                <span class="border border-3 rounded-pill border-dark w-25 d-inline-block">@Model.ModificadorDestreza</span>
+            </div>
+        </div>
+        <div style="min-width:" class="border border-radius-2 border-dark rounded bg bg-white py-3 my-4">
+            <div class="text-center fs-6">
+                Constituição
+            </div>
+            <div class='text-center fs-2'>
+                @Model.Constituicao
+            </div>
+            <div class="text-center fs-6">
+                <span
+                    class="border border-3 rounded-pill border-dark w-25 d-inline-block">@Model.ModificadorConstituicao</span>
+            </div>
+        </div>
+        <div style="min-width:" class="border border-radius-2 border-dark rounded bg bg-white py-3 my-4">
+            <div class="text-center fs-6">
+                Inteligência
+            </div>
+            <div class='text-center fs-2'>
+                @Model.Inteligencia
+            </div>
+            <div class="text-center fs-6">
+                <span
+                    class="border border-3 rounded-pill border-dark w-25 d-inline-block">@Model.ModificadorInteligencia</span>
+            </div>
+        </div>
+        <div style="min-width:" class="border border-radius-2 border-dark rounded bg bg-white py-3 my-4">
+            <div class="text-center fs-6">
+                Sabedoria
+            </div>
+            <div class='text-center fs-2'>
+                @Model.Sabedoria
+            </div> 
+            <div class="text-center fs-6">
+                <span
+                    class="border border-3 rounded-pill border-dark w-25 d-inline-block">@Model.ModificadorSabedoria</span>
+            </div>
+        </div>
+        <div style="min-width:" class="border border-radius-2 border-dark rounded bg bg-white py-3 my-4">
+            <div class="text-center fs-6">
+                Carisma
+            </div>
+            <div class='text-center fs-2'>
+                @Model.Carisma
+            </div>
+            <div class="text-center fs-6">
+                <span class="border border-3 rounded-pill border-dark w-25 d-inline-block">@Model.ModificadorCarisma</span>
+            </div>
+        </div>
+    </div>
+}
+else
+{ *@
+    <div class="rounded-3" data-bs-toggle="modal" data-bs-target="#_AlterarAtributoModal">
+        <div style="min-width:" class="border border-radius-2 border-dark rounded bg bg-white py-3 my-4">
+            <div class="text-center fs-6">
+                Força
+            </div>
+            <div class='text-center fs-2'>
+                @Model.Forca
+            </div>
+            <div class="text-center fs-6">
+                <span class="border border-3 rounded-pill border-dark w-25 d-inline-block">@Model.ModificadorForca</span>
+            </div>
+        </div>
+        <div style="min-width:" class="border border-radius-2 border-dark rounded bg bg-white py-3 my-4">
+            <div class="text-center fs-6">
+                Destreza
+            </div>
+            <div class='text-center fs-2'>
+                @Model.Destreza
+            </div>
+            <div class="text-center fs-6">
+                <span class="border border-3 rounded-pill border-dark w-25 d-inline-block">@Model.ModificadorDestreza</span>
+            </div>
+        </div>
+        <div style="min-width:" class="border border-radius-2 border-dark rounded bg bg-white py-3 my-4">
+            <div class="text-center fs-6">
+                Constituição
+            </div>
+            <div class='text-center fs-2'>
+                @Model.Constituicao
+            </div>
+            <div class="text-center fs-6">
+                <span
+                    class="border border-3 rounded-pill border-dark w-25 d-inline-block">@Model.ModificadorConstituicao</span>
+            </div>
+        </div>
+        <div style="min-width:" class="border border-radius-2 border-dark rounded bg bg-white py-3 my-4">
+            <div class="text-center fs-6">
+                Inteligência
+            </div>
+            <div class='text-center fs-2'>
+                @Model.Inteligencia
+            </div>
+            <div class="text-center fs-6">
+                <span
+                    class="border border-3 rounded-pill border-dark w-25 d-inline-block">@Model.ModificadorInteligencia</span>
+            </div>
+        </div>
+        <div style="min-width:" class="border border-radius-2 border-dark rounded bg bg-white py-3 my-4">
+            <div class="text-center fs-6">
+                Sabedoria
+            </div>
+            <div class='text-center fs-2'>
+                @Model.Sabedoria
+            </div>
+            <div class="text-center fs-6">
+                <span
+                    class="border border-3 rounded-pill border-dark w-25 d-inline-block">@Model.ModificadorSabedoria</span>
+            </div>
+        </div>
+        <div style="min-width:" class="border border-radius-2 border-dark rounded bg bg-white py-3 my-4">
+            <div class="text-center fs-6">
+                Carisma
+            </div>
+            <div class='text-center fs-2'>
+                @Model.Carisma
+            </div>
+            <div class="text-center fs-6">
+                <span class="border border-3 rounded-pill border-dark w-25 d-inline-block">@Model.ModificadorCarisma</span>
+            </div>
+        </div>
+    </div>
+@* } *@
+    

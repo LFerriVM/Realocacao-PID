@@ -1,0 +1,43 @@
+<script src="~/js/rolagem.js"></script>
+<center>
+    <div class="box1">
+        <h1 style="margin: 10px">Rolagem de dados!</h1>
+        <h1 style="margin: 10px">Escolha um dado</h1>
+        <hr>
+        <div style="justify-self:center; clear:none; position:relative; margin:10px">
+            <form>
+                <div style="display:inline-block; text-align: left; vertical-align: super;">
+                    <input id=d4 type="radio" name="dado" value="d4">
+                    <label for="d4">D4</label><br>
+
+                    <input id="d8" type="radio" name="dado" value="d8">
+                    <label for="d8">D8</label><br>
+
+                    <input id="d12" type="radio" name="dado" value="d12">
+                    <label for="d12">D12</label><br>
+                </div>
+                <div style="display:inline-block; text-align: left; vertical-align:super;">
+                    <input id="d6" type="radio" name="dado" value="d6">
+                    <label for="d6">D6</label><br>
+
+                    <input id="d10" type="radio" name="dado" value="d10">
+                    <label for="d10">D10</label><br>
+
+                    <input id="d20" type="radio" name="dado" value="d20">
+                    <label for="d20">D20</label><br>
+                </div>
+                <div style="display: static; position: relative; text-align:center; vertical-align:bottom">
+                    <input id="d100" type="radio" name="dado" value="d100">
+                    <label for="d100">D100</label>
+                </div>
+            </form>
+        </div>
+        <button class="bt2" type="button" onclick="clicar()">ROLAR!</button>
+    </div>
+    <h2>Deseja rolar quantos dados?</h2>
+    <input class="area" id="quantidade" type="number" name="quantidade" min="0">
+    <hr>
+    <div class="box1" id="displayresultado">
+
+    </div>
+</center>

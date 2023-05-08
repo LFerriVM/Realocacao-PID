@@ -1,0 +1,68 @@
+@model Personagem;
+@{
+
+    @if (@Model.EscolheuEquip == 0)
+    {
+        <div data-bs-target="#_EscolherItemModal" data-bs-toggle='modal'>
+            @{
+                string texto = "";
+                @foreach (var listapersonagemitem in @ViewBag.listapersonagemitem)
+                {
+                    @foreach (var listaitem in @ViewBag.listaitem)
+                    {
+                        if (listapersonagemitem.IdItem == listaitem.IdItem && listapersonagemitem.IdPersonagem ==
+                        @Model.IdPersonagem)
+                        {
+                            texto += listaitem.Nome + ", ";
+                        }
+                    }
+                }
+                @foreach (var listaarma in @ViewBag.listaarma)
+                {
+                    @foreach (var listapersonagemarma in @ViewBag.listapersonagemarma)
+                    {
+                        if (listapersonagemarma.IdPersonagem == Model.IdPersonagem && listaarma.IdArma == listapersonagemarma.IdArma &&
+                        listapersonagemarma.IsEquipada == false)
+                        {
+                            texto += listaarma.Nome + ", ";
+                        }
+                    }
+                }
+
+                <textarea rows="10" class="w-100 border border-1 border-dark rounded" readonly>@texto</textarea>
+            }
+        </div>
+    }
+    else
+    {
+        <div data-bs-toggle="modal" data-bs-target="#_AlterarItemModal">
+            @{
+                string texto = "";
+                @foreach (var listapersonagemitem in @ViewBag.listapersonagemitem)
+                {
+                    @foreach (var listaitem in @ViewBag.listaitem)
+                    {
+                        if (listapersonagemitem.IdItem == listaitem.IdItem && listapersonagemitem.IdPersonagem ==
+                        @Model.IdPersonagem)
+                        {
+                            texto += listaitem.Nome + ", ";
+                        }
+                    }
+                }
+                @foreach (var listaarma in @ViewBag.listaarma)
+                {
+                    @foreach (var listapersonagemarma in @ViewBag.listapersonagemarma)
+                    {
+                        if (listapersonagemarma.IdPersonagem == Model.IdPersonagem && listaarma.IdArma == listapersonagemarma.IdArma &&
+                        listapersonagemarma.IsEquipada == false)
+                        {
+                            texto += listaarma.Nome + ", ";
+                        }
+                    }
+                }
+
+                <textarea rows="10" class="w-100 border-0 -0" readonly>@texto</textarea>
+            }
+        </div>
+    }
+}

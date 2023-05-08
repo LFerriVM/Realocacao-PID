@@ -1,0 +1,27 @@
+@model Usuario;
+<link rel="stylesheet" href="~/css/login.css">
+<div class="body">
+  <div class="login-page">
+    <div class="form">
+      <img src="~/png/logo1.png" width="250px">
+      <form class="login-form" method="POST" asp-action="Cadastrar" asp-controller="Usuario">
+        <div class="row">
+          <input type="text" placeholder="nome" asp-for="@Model.Nome">
+          <input type="text" placeholder="nome de usuario" asp-for="@Model.Login">
+          <input type="text" placeholder="email" asp-for="@Model.Email">
+          <div class="row-cols-2 row col g-2">
+            <div class="col-6 m-0 p-0 pe-2">
+              <input class="w-100" type="password" placeholder="senha" asp-for="@Model.Senha">
+            </div>
+            <div class="col-6 m-0 p-0 ps-2">
+              <input class="w-100" type="password" placeholder="confirmar senha" asp-for="@Model.ConfSenha">
+            </div>
+          </div>
+        </div>
+        <button type="submit">Criar</button>
+        <p class="message">já possui uma conta? <a href="#">login</a></p>
+      </form>
+    </div>
+  </div>
+
+</div>

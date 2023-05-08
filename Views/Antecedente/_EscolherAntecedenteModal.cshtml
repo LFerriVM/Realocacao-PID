@@ -1,0 +1,264 @@
+@model Personagem;
+
+@{
+  List<int> armas = new List<int>();
+  List<int> armaduras = new List<int>();
+  List<int> itens = new List<int>();
+  List<int> profarmas = new List<int>();
+  List<int> profarmaduras = new List<int>();
+  List<int> profitens = new List<int>();
+  List<int> profveicter = new List<int>();
+  List<int> profveicaq = new List<int>();
+  List<int> idiomaspersonagem = new List<int>();
+}
+<script src="~/js/antecedentes.js"></script>
+
+
+
+<div class="modal fade" id="_EscolherAntecedenteModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+  role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title texto-2" id="modalTitleId">Selecionar Antecedente</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+
+        <form method="POST" asp-action="EscolherAntecedente" asp-controller="Antecedente">
+          <input type="hidden" asp-for="@Model.IdPersonagem">
+
+          <div class="col m-auto text-center">
+            <div style="justify-self:center; clear:none; position:relative;">
+              <div onclick="antecedentes()" method="POST">
+                <div style="display:inline-block; text-align: left; vertical-align: super; margin:10px">
+
+                  @foreach (var listaantecedente in @ViewBag.listaantecedente)
+                  {
+                    if (listaantecedente.IdAntecedente % 2 != 0)
+                    {
+                      <input id='@("Antecedente" + listaantecedente.IdAntecedente)' type="radio" name="IdAntecedente"
+                    value=@listaantecedente.IdAntecedente>
+                      <label for="@listaantecedente.Nome">@listaantecedente.Nome</label><br>
+                    }
+                  }
+                </div>
+                <div style="display:inline-block; text-align: left; vertical-align: super">
+                  @foreach (var item in @ViewBag.listaantecedente)
+                  {
+                    if (item.IdAntecedente % 2 == 0)
+                    {
+                      <input id='@("Antecedente" + item.IdAntecedente)' type="radio" name="IdAntecedente"
+                    value=@item.IdAntecedente>
+                      <label for="@item.Nome">@item.Nome</label><br>
+                    }
+                  }
+                </div>
+              </div>
+              <button type="submit" class="btn btn-primary">Confirmar</button>
+            </div>
+          </div>
+          <hr>
+          @foreach (var listaantecedente in @ViewBag.listaantecedente)
+          {
+            <div id="@(listaantecedente.Nome)antecedente" class="antecedentes"
+            style="visibility:hidden; display: none; text-align: left; margin-left: 2px">
+              <h5 class="display-5">@listaantecedente.Nome</h5>
+              <hr>
+
+              <h6 class="display-6 texto-2">Proficiências:</h6>
+              <p class="lead texto-conteudo">@Html.Raw(listaantecedente.Proficiencia.Replace("\n", "<br>"))</p>
+
+              @if (@listaantecedente.IdAntecedente == 2)
+              {
+                <select asp-for=@profitens size="auto">
+                  <option value="">Escolha uma Ferramenta de Artesão</option>
+                  @foreach (var listaitem in @ViewBag.listaitem)
+                  {
+                    if (listaitem.IdItem >= 100 && listaitem.IdItem <= 115)
+                    {
+                      <option value=@listaitem.IdItem>@listaitem.Nome</option>
+                    }
+                  }
+                </select>
+              }
+              else if (@listaantecedente.IdAntecedente == 3)
+              {
+                <select asp-for=@profitens>
+                  <option value="">Escolha um Instrumento Musical</option>
+                  @foreach (var listaitem in @ViewBag.listaitem)
+                  {
+                    if (listaitem.IdItem >= 118 && listaitem.IdItem <= 127)
+                    {
+                      <option value=@listaitem.IdItem>@listaitem.Nome</option>
+                    }
+                  }
+                </select>
+              }
+              else if (@listaantecedente.IdAntecedente == 5)
+              {
+                <select asp-for=@profitens>
+                  <option value="">Escolha um Tipo de Kit de Jogos</option>
+                  @foreach (var listaitem in @ViewBag.listaitem)
+                  {
+                    if (listaitem.IdItem >= 131 && listaitem.IdItem <= 134)
+                    {
+                      <option value=@listaitem.IdItem>@listaitem.Nome</option>
+                    }
+                  }
+                </select>
+              }
+              else if (@listaantecedente.IdAntecedente == 8)
+              {
+                    <select asp-for=@profitens size="auto">
+                  <option value="">Escolha uma Ferramenta de Artesão</option>
+                  @foreach (var listaitem in @ViewBag.listaitem)
+                  {
+                    if (listaitem.IdItem >= 100 && listaitem.IdItem <= 115)
+                    {
+                      <option value=@listaitem.IdItem>@listaitem.Nome</option>
+                    }
+                  }
+                </select>
+
+                <select asp-for=@profveicter size="auto">
+                  <option value="">Escolha um Tipo de Veículo Terrestre</option>
+                  @foreach (var listaveiculoterrestre in @ViewBag.listaveiculoterrestre)
+                  {
+                    <option value=@listaveiculoterrestre.IdVeiculoTerrestre>@listaveiculoterrestre.Nome</option>
+                  }
+                </select>
+              }
+              else if (@listaantecedente.IdAntecedente == 9)
+              {
+                <select asp-for=@profveicaq>
+                  <option value="">Escolha um Veículo Aquático</option>
+                  @foreach (var listaveiculoaquatico in @ViewBag.listaveiculoaquatico)
+                  {
+                    <option value=@listaveiculoaquatico.IdVeiculoAquatico>@listaveiculoaquatico.Nome</option>
+                  }
+                </select>
+              }
+              else if (@listaantecedente.IdAntecedente == 10)
+              {
+                <select asp-for=@profitens>
+                  <option value="">Escolha um Tipo de Kit de Jogos</option>
+                  @foreach (var listaitem in @ViewBag.listaitem)
+                  {
+                    if (listaitem.IdItem >= 131 && listaitem.IdItem <= 134)
+                    {
+                      <option value=@listaitem.IdItem>@listaitem.Nome</option>
+                    }
+                  }
+                </select>
+              }
+
+              <hr>
+              <h4 class="texto-2">Equipamentos: @listaantecedente.Equipamento</h4>
+
+              @if (@listaantecedente.IdAntecedente == 1)
+              {
+                <select class="area" style="height: auto;" asp-for="@itens">
+                  <option value="">Escolha um Símbolo Sagrado</option>
+                  <option value=89>Amuleto</option>
+                  <option value=90>Emblema</option>
+                  <option value=91>Relicário</option>
+                </select>
+              }
+              else if (@listaantecedente.IdAntecedente == 2)
+              {
+                <select asp-for=@itens>
+                  <option value="">Escolha uma Ferramenta de Artesão</option>
+                  @foreach (var listaitem in @ViewBag.listaitem)
+                  {
+                    if (listaitem.IdItem >= 100 && listaitem.IdItem <= 115)
+                    {
+                      <option value=@listaitem.IdItem>@listaitem.Nome</option>
+                    }
+                  }
+                </select>
+              }
+              else if (@listaantecedente.IdAntecedente == 3)
+              {
+                <select asp-for=@itens>
+                  <option value="">Escolha um Instrumento Musical</option>
+                  @foreach (var listaitem in @ViewBag.listaitem)
+                  {
+                    if (listaitem.IdItem >= 118 && listaitem.IdItem <= 127)
+                    {
+                      <option value=@listaitem.IdItem>@listaitem.Nome</option>
+                    }
+                  }
+                </select>
+              }
+              else if (@listaantecedente.IdAntecedente == 8)
+              {
+                <select asp-for=@itens>
+                  <option value="">Escolha uma Ferramenta de Artesão</option>
+                  @foreach (var listaitem in @ViewBag.listaitem)
+                  {
+                    if (listaitem.IdItem >= 100 && listaitem.IdItem <= 115)
+                    {
+                      <option value=@listaitem.IdItem>@listaitem.Nome</option>
+                    }
+                  }
+                </select>
+              }
+
+              <hr>
+              @if (listaantecedente.IdiomaQtd != 0)
+              {
+                <h6 class="display-6 texto-2">Idiomas: @listaantecedente.IdiomaQtd idiomas à sua escolha</h6>
+                if (listaantecedente.IdAntecedente == 1 || listaantecedente.IdAntecedente == 12)
+                {
+                  <select class="area" style="height: auto;" multiple asp-for="@idiomaspersonagem">
+                    <option value=""></option>
+                    @foreach (var listaidioma in @ViewBag.listaidioma)
+                    {
+                      @* <input type="radio" value="@listaidioma.IdIdioma" asp-for=@idiomaspersonagem> *@
+                      <option value=@listaidioma.IdIdioma>@listaidioma.Nome</option>
+                    }
+                  </select>
+                }
+                else if (listaantecedente.IdAntecedente == 2 || listaantecedente.IdAntecedente == 6 ||
+                listaantecedente.IdAntecedente == 7 || listaantecedente.IdAntecedente == 10)
+                {
+                  <select asp-for="@idiomaspersonagem">
+                    <option value="">Escolha @listaantecedente.IdiomaQtd idiomas</option>
+                    @foreach (var listaidioma in @ViewBag.listaidioma)
+                    {
+                      <option value=@listaidioma.IdIdioma>@listaidioma.Nome</option>
+                    }
+                  </select>
+                }
+              }
+              else
+              {
+                <h6 class="display-6 texto-2">Este antecedente não concede idiomas adicionais</h6>
+              }
+              <hr>
+              <h6 class="display-6  texto-2"></h6>
+              <p class="lead texto-conteudo">@Html.Raw(listaantecedente.Habilidade.Replace("\n", "<br>"))</p>
+              <hr>
+              <h6 class="display-6  texto-2">Traços:</h6>
+                <p class="lead  texto-conteudo"> @Html.Raw(listaantecedente.Traco.Replace("\n", "<br>"))</p>
+              <hr>
+              <h6 class="display-6  texto-2">Ideais:</h6>
+              <p class="lead  texto-conteudo"> @Html.Raw(listaantecedente.Ideal.Replace("\n", "<br>"))</p>
+              <hr>
+              <h6 class="display-6  texto-2">Vínculos:</h6>
+                <p class="lead  texto-conteudo"> @Html.Raw(listaantecedente.Vinculo.Replace("\n", "<br>"))</p>
+              <hr>
+              <h6 class="display-6  texto-2">Defeitos:</h6>
+              <p class="lead  texto-conteudo"> @Html.Raw(listaantecedente.Defeito.Replace("\n", "<br>"))</p>
+            </div>
+          }
+        </form>
+      </div>
+      <div class="modal-footer">`
+        
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>

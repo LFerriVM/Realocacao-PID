@@ -1,0 +1,211 @@
+@using System.Text
+@model Personagem;
+@{
+    int arma = 0;
+    int armadura = 0;
+    int item = 0;
+    bool IsEquipada = false;
+    int Qtd = 1;
+    bool Deletar = false;
+}
+<script type="text/javascript" src="~/js/alterar_item.js"></script>
+<div class="modal fade" id="_AlterarItemModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">Itens/Inventário</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                    onclick="reset()"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col border border-dark">
+                        <form method="POST" asp-action="AlterarInventario" asp-controller="Item">
+                            <input type="hidden" asp-for="@Model.IdPersonagem">
+
+                            <h5>Inventário</h5>
+                            <div class="row text-center">
+                                <div class="col px-0 py-1">
+                                    <button type="button" onclick="alterar_item_inventario(this)"
+                                        id="alterar_item_inventario_button_Armas" class="btn btn-secondary">Armas</button>
+                                </div>
+                                <div class="col px-0 py-1">
+                                    <button type="button" onclick="alterar_item_inventario(this)"
+                                        id="alterar_item_inventario_button_Armaduras" class="btn btn-secondary">Armaduras</button>
+                                </div>
+                                <div class="col px-0 py-1">
+                                    <button type="button" onclick="alterar_item_inventario(this)"
+                                        id="alterar_item_inventario_button_Itens" class="btn btn-secondary">Itens</button>
+                                </div>
+                            </div>
+                            <div class="row col text-center">
+                                <div class="col-12">
+
+                                    @{
+                                        var inventario_armas = new StringBuilder("");
+                                        @foreach (var listapersonagemarma in @ViewBag.listapersonagemarma)
+                                        {
+                                            @foreach (var listaarma in @ViewBag.listaarma)
+                                            {
+                                                @if (listapersonagemarma.IdArma == listaarma.IdArma &&
+                                               listapersonagemarma.IdPersonagem == @Model.IdPersonagem)
+                                                {
+                                                    inventario_armas.Append("<option value="+@listaarma.IdArma+">"+@listaarma.Nome+" | "+ @listaarma.DadoDano +"</option>");
+                                                    <input type="hidden" id='@("hidden_inventario_Armas_" + listaarma.IdArma + "_Qtd")' value="@listapersonagemarma.Qtd">
+                                                    <input type="hidden" id='@("hidden_inventario_Armas_" + listaarma.IdArma + "_IsEquipada")' value='@Convert.ToString(listapersonagemarma.IsEquipada)' >
+                                                }
+                                            }
+                                        }
+
+                                    }
+
+                                    @{
+                                        var inventario_armaduras = new StringBuilder("");
+                                        @foreach (var listapersonagemarmadura in @ViewBag.listapersonagemarmadura)
+                                        {
+                                            @foreach (var listaarmadura in @ViewBag.listaarmadura)
+                                            {
+                                                @if (listapersonagemarmadura.IdArmadura == listaarmadura.IdArmadura &&
+                                               listapersonagemarmadura.IdPersonagem == @Model.IdPersonagem)
+                                                {
+                                                    inventario_armaduras.Append("<option value="+@listaarmadura.IdArmadura+">"+@listaarmadura.Nome+"</option>");
+                                                    <input type="hidden" id='@("hidden_inventario_Armaduras_" + listaarmadura.IdArmadura + "_Qtd")' value="@listapersonagemarmadura.Qtd">
+                                                    <input type="hidden" id='@("hidden_inventario_Armaduras_" + listaarmadura.IdArmadura + "_IsEquipada")' value='@Convert.ToString(listapersonagemarmadura.IsEquipada)' >
+                                                }
+                                            }
+                                        }
+                                    }
+
+                                    @{
+                                        var inventario_itens = new StringBuilder("");
+                                        @foreach (var listapersonagemitem in @ViewBag.listapersonagemitem)
+                                        {
+                                            @foreach (var listaitem in @ViewBag.listaitem)
+                                            {
+                                                @if (listapersonagemitem.IdPersonagem == @Model.IdPersonagem &&
+                                                listapersonagemitem.IdItem == listaitem.IdItem)
+                                                {
+                                                    inventario_itens.Append("<option value="+@listaitem.IdItem+">"+@listaitem.Nome+"</option>");
+                                                    <input type="hidden" id='@("hidden_inventario_Itens_" + listaitem.IdItem + "_Qtd")' value="@listapersonagemitem.Qtd">
+                                                }
+                                            }
+                                        }
+                                    }
+                                    <select id="alterar_item_inventario_Armas" class="alterar_item_inventario w-75 form-select"
+                                        style="visibility: hidden; display: none" asp-for="@arma" onchange="transporvalores_armas(this)">
+                                        <option value="">Armas</option>
+                                        @Html.Raw(@inventario_armas)
+                                    </select>
+                                    <select id="alterar_item_inventario_Armaduras" class="alterar_item_inventario w-75 form-select"
+                                        style="visibility: hidden; display: none" asp-for="@armadura" onchange="transporvalores_armaduras(this)">
+                                        <option value="">Armaduras</option>
+                                        @Html.Raw(@inventario_armaduras)
+                                    </select>
+                                    <select id="alterar_item_inventario_Itens" class="alterar_item_inventario w-75 form-select"
+                                        style="visibility: hidden; display: none" asp-for="@item" onchange="transporvalores_itens(this)">
+                                        <option value="">Itens</option>
+                                        @Html.Raw(inventario_itens)
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row col text-center pt-2">
+                                <div class="col">
+                                    <input type="checkbox" id="IsEquipadaInventario" value=@true asp-for="@IsEquipada" class="form-check-input">
+                                    <label>Equipada?</label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" class="w-50 form-control" id="QtdInventario" asp-for="@Qtd">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row col p-3 my-2 w-75 m-auto text-center">
+                                <div class="col">
+                                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                                    <input type="hidden" asp-for="@arma">
+                                    <input type="hidden" asp-for="@armadura">
+                                    <input type="hidden" asp-for="@item">
+                                </div>
+                                <div class="col">
+                                    <input type="hidden" asp-for="@Deletar" id="inputhidden_deletar">
+                                    <button type="submit" onclick="deletar()" for="@Deletar"
+                                        value=@true class="btn btn-danger">Deletar</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="col border border-dark">
+                        <form method="POST" asp-action="AlterarItem" asp-controller="Item">
+                            <input type="hidden" asp-for="@Model.IdPersonagem">
+                            <h5>Adicinar Itens</h5>
+                            <div class="row text-center">
+                                <div class="col px-0 py-1">
+                                    <button type="button" onclick="alterar_item_select(this)"
+                                        id="alterar_item_select_button_Armas" class="btn btn-secondary">Armas</button>
+                                </div>
+                                <div class="col px-0 py-1">
+                                    <button type="button" onclick="alterar_item_select(this)"
+                                        id="alterar_item_select_button_Armaduras" class="btn btn-secondary">Armaduras</button>
+                                </div>
+                                <div class="col px-0 py-1">
+                                    <button type="button" onclick="alterar_item_select(this)"
+                                        id="alterar_item_select_button_Itens" class="btn btn-secondary">Itens</button>
+                                </div>
+                            </div>
+                            <div class="row col text-center">
+                                <div class="col">
+                                    <select id="alterar_item_select_Armas" class="alterar_item_select w-75 form-select"
+                                        style="visibility: hidden; display: none" asp-for="@arma">
+                                        <option value="">Armas</option>
+                                        @foreach (var listaarma in @ViewBag.listaarma)
+                                        {
+                                            <option value="@listaarma.IdArma">@listaarma.Nome | @listaarma.DadoDano</option>
+                                        }
+                                    </select>
+                                    <select id="alterar_item_select_Armaduras" class="alterar_item_select w-75 form-select"
+                                        style="visibility: hidden; display: none" asp-for="@armadura">
+                                        <option value="">Armaduras</option>
+                                        @foreach (var listaarmadura in @ViewBag.listaarmadura)
+                                        {
+                                            <option value="@listaarmadura.IdArmadura">@listaarmadura.Nome</option>
+                                        }
+                                    </select>
+                                    <select id="alterar_item_select_Itens" class="alterar_item_select w-75 form-select"
+                                        style="visibility: hidden; display: none" asp-for="@item">
+                                        <option value="">Itens</option>
+                                        @foreach (var listaitem in @ViewBag.listaitem)
+                                        {
+                                            <option value="@listaitem.IdItem">@listaitem.Nome</option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row col text-center pt-2">
+                                <div class="col">
+                                    <input type="checkbox" value=@true asp-for="@IsEquipada" class="form-check-input">
+                                    <label>Equipada?</label>
+                                </div>
+                                <div class="col">
+                                    <input type="number" asp-for="@Qtd" class="w-50 form-control">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row col p-3 w-50 m-auto text-center">
+                                <div class="col m-auto">
+                                    <button type="submit" class="m-auto btn btn-primary">Confirmar</button>
+                                    <input type="hidden" asp-for="@arma">
+                                    <input type="hidden" asp-for="@armadura">
+                                    <input type="hidden" asp-for="@item">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="reset()">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

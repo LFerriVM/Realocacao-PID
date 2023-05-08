@@ -1,0 +1,342 @@
+@model Personagem;
+<div class="row p-0 border border-1 border-dark rounded bg bg-fundo" data-bs-toggle="modal" data-bs-target="#_EscolherPericiaModal">
+    <div class="position-relative"
+    data-bs-toggle="tooltip" 
+    data-bs-placement="top"
+    data-bs-title="Uma perícia representa um
+    aspecto específico de uma habilidade e a proficiência de
+    um indivíduo em uma perícia demonstra um foco sobre
+    esse aspecto. Ou seja, são habilidades e capacidades de um personagem.">
+        <div class="row col-12 mx-0 pe-0 pt-4">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Acrobacia" asp-for="@Model.Acrobacia">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Acrobacia is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorDestreza)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorDestreza</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Acrobacia (Des)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.LidarcomAnimais" asp-for="@Model.LidarcomAnimais">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.LidarcomAnimais is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorSabedoria)</span>
+            }
+            else
+            {
+                    <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorSabedoria</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Adestramento (Sab)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Arcanismo" asp-for="@Model.Arcanismo">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Arcanismo is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorInteligencia)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorInteligencia</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Arcanismo (Int)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Atletismo" asp-for="@Model.Atletismo">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Atletismo is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorForca)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorForca</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Atletismo (For) </p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Atuacao" asp-for="@Model.Atuacao">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Atuacao is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorDestreza)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorDestreza</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Atuação (Car)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Enganacao" asp-for="@Model.Enganacao">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Enganacao is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorCarisma)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorCarisma</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Enganação (Car)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Furtividade" asp-for="@Model.Furtividade">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Furtividade is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorDestreza)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorDestreza</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Furtividade (Des)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Historia" asp-for="@Model.Historia">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Historia is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorInteligencia)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorInteligencia</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">História (Int)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Intimidacao" asp-for="@Model.Intimidacao">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Intimidacao is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorCarisma)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorCarisma</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Intimidação (Car)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Intuicao" asp-for="@Model.Intuicao">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Intuicao is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorSabedoria)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorSabedoria</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Intuição (Sab)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Investigacao" asp-for="@Model.Investigacao">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Investigacao is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorInteligencia)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorInteligencia</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Investigação (Int)</p>
+        </div>
+
+
+
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Medicina" asp-for="@Model.Medicina">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Medicina is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorSabedoria)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorSabedoria</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Medicina (Sab)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Natureza" asp-for="@Model.Natureza">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Natureza is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorInteligencia)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorInteligencia</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Natureza (Int)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Percepcao" asp-for="@Model.Percepcao">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Percepcao is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorSabedoria)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorSabedoria</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Percepção (Sab)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Persuasao" asp-for="@Model.Persuasao">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Persuasao is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorCarisma)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorCarisma</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Persuasão (Car)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Prestidigitacao" asp-for="@Model.Prestidigitacao">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0 px-0 mx-0">
+            @if (Model.Prestidigitacao is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorDestreza)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorDestreza</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0 px-0 mx-0">
+            <p class="small">Prestiditação (Des)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Religiao" asp-for="@Model.Religiao">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Religiao is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorInteligencia)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorInteligencia</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Religião (Int)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <div class="col-1 px-0 mx-0 ms-1">
+            <input type="checkbox" value="@Model.Sobrevivencia" asp-for="@Model.Sobrevivencia">
+        </div>
+        <div class="col-2 px-0 mx-0 ms-0">
+            @if (Model.Sobrevivencia is true)
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@(Model.BonusProficiencia+Model.ModificadorSabedoria)</span>
+            }
+            else
+            {
+                <span class="badge text-black bg-white rounded rounded-pill" style="min-width: 15%">@Model.ModificadorSabedoria</span>
+            }
+        </div>
+        <div class="col-7 px-0 mx-0 ms-0">
+            <p class="small">Sobrevivência (Sab)</p>
+        </div>
+    </div>
+    <div class="row col-12 mx-0 pe-0">
+        <label class="text-uppercase small d-block text-center">Perícias</label>
+    </div>
+    </div>
+</div> 
+<span class="position-absolute top-0 start-100 translate-middle rounded-pill badge bg-danger">?</span>

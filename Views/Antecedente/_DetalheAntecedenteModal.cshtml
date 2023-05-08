@@ -1,0 +1,32 @@
+@model Personagem;
+<div class="modal fade" id="_DetalheAntecedenteModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title display-6 texto-2" id="modalTitleId">Detalhe Antecedente @Model.Antecedente.Nome</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+
+                    <div class="col-12">
+                        <h6 class="display-6 texto-2">@Model.Antecedente.Nome</h6>
+                    </div>
+                    <div class="col-12">
+                        <p class="lead texto-conteudo">@Html.Raw(@Model.Antecedente.Proficiencia.Replace("\n", "<br>"))</p>
+                    </div>
+                    <div class="col-12">
+                        <p class="lead texto-conteudo">@Html.Raw(@Model.Antecedente.Equipamento.Replace("\n", "<br>"))</p>
+                    </div>
+                    <div class="col-12">
+                        <p class="lead texto-conteudo">@Html.Raw(@Model.Antecedente.Habilidade.Replace("\n", "<br>"))</p>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

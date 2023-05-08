@@ -1,0 +1,40 @@
+@model Personagem;
+<div class="modal fade" id="_EscolherTendenciaModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title display-6 texto-2" id="modalTitleId">Alinhamento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <form method="POST" asp-action="EscolherTendencia" asp-controller="Personagem">
+                <div class="modal-body">
+
+                    <div class="p-1">
+                        <select style="border: auto" class="form-select" asp-for="@Model.Tendencia">
+                            <option value="">Escolha</option>
+                            <option value="LB">Leal Bom</option>
+                            <option value="LN">Leal Neutro</option>
+                            <option value="LM">Leal Mal</option>
+                            <option value="NB">Neutro Bom</option>
+                            <option value="TN">Totalmente Neutro</option>
+                            <option value="NM">Neutro Mal</option>
+                            <option value="CB">Caótico Bom</option>
+                            <option value="CN">Caótico Neutro</option>
+                            <option value="CM">Caótico Mal</option>
+                        </select>
+                    </div>
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                    <div class="p-1">
+
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="submit" class="btn btn-primary">Confirmar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,92 @@
+@model Personagem;
+<div class="modal fade" id="_AlterarAtributoModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title texto-2" id="modalTitleId">Atributos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" asp-action="EscolherAtributo" asp-controller="Atributo">
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                    <div class="row">
+                        <p class="texto-2 text-center">
+                            Padrao de distribuição: 8, 10, 12, 13, 14, 15
+                        </p>
+                    </div>
+
+                    <div class="row col-12">
+                        <div class="col-6">
+                            <div class="border border-radius-2 py-0 text-center">
+                                <div class="lead">
+                                    Força
+                                </div>
+                                <div class='fs-4'>
+                                    <input type="number" asp-for="@Model.Forca" class="w-25" min="6" max="30">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="border border-radius-2 py-0 text-center">
+                                <div class="lead">
+                                    Destreza
+                                </div>
+                                <div class="lead">
+                                    <input type="number" asp-for="@Model.Destreza" class="w-25" min="6" max="30">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="border border-radius-2 py-0 text-center">
+                                <div class="lead">
+                                    Constituição
+                                </div>
+                                <div class="lead">
+                                    <input type="number" asp-for="@Model.Constituicao" class="w-25" min="6" max="30">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="border border-radius-2 py-0 text-center">
+                                <div class="lead">
+                                    Inteligência
+                                </div>
+                                <div class="lead">
+                                    <input type="number" asp-for="@Model.Inteligencia" class="w-25" min="6" max="30">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="border border-radius-2 py-0 text-center">
+                                <div class="lead">
+                                    Sabedoria
+                                </div>
+                                <div class="lead">
+                                    <input type="number" asp-for="@Model.Sabedoria" class="w-25" min="6" max="30">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="border border-radius-2 py-0 text-center">
+                                <div class="lead">
+                                    Carisma
+                                </div>
+                                <div class="lead">
+                                    <input type="number" asp-for="@Model.Carisma" class="w-25" min="6" max="30">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col text-center pt-2">
+                        <button type="submit" class="btn btn-primary m-auto">Confirmar</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

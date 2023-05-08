@@ -1,0 +1,170 @@
+@using Models
+@model Personagem
+
+<style>
+    span {
+        background-color: black;
+        color: yellow
+    }
+    #monetariopersonalizado{
+        visibility: hidden;
+        display: none;
+        margin: 20px;
+        border: 1px solid black;
+        text-align: center
+    }
+    #monetariopersonalizado input{
+        width: 60px;
+        text-align: center
+    }
+    #BarraBio{
+        color: black;
+        background-color: red
+    }
+</style>
+<script>
+     function checado(){
+         if (document.getElementById('checado').checked == true){
+            document.getElementById('monetariopersonalizado').style.visibility = "visible";
+            document.getElementById('monetariopersonalizado').style.display = "block";
+            for (let element of document.getElementsByClassName("dinheiro")){
+                element.value = 0;
+            }
+            
+        }
+        else{
+            document.getElementById('monetariopersonalizado').style.visibility = "hidden"
+            document.getElementById('monetariopersonalizado').style.display = "none"
+            for (let element of document.getElementsByClassName("dinheiro")){
+                element.value = null;
+            }
+        }
+     }
+</script>
+
+<div class="pai" style="min-width: 247px">
+    <h1 style="margin: 20px">Persona e Informações</h1>
+    <hr>
+
+    <form method="POST">
+        <div class="containerb">
+            <div class="campo">
+            <div>
+            <label for="nm">NOME DO PERSONAGEM: </label>
+            <input class="area" type="text" asp-for="@Model.Nome">
+            </div>
+        </div>
+        <br>
+        <br>
+        <div class="containerb">
+            <div class="campo">
+            <label  for="nm">TENDÊNCIA</label>
+            <br>
+            <select style="float:right;" class="area" asp-for="@Model.Tendencia">
+                <option value="">Escolha</option>
+                <option value="LB">Leal Bom</option>
+                <option value="LN">Leal Neutro</option>
+                <option value="LM">Leal Mal</option>
+                <option value="NB">Neutro Bom</option>
+                <option value="TN">Totalmente Neutro</option>
+                <option value="NM">Neutro Mal</option>
+                <option value="CB">Caótico Bom</option>
+                <option value="CN">Caótico Neutro</option>
+                <option value="CM">Caótico Mal</option>
+            </select>
+            </div>
+            </div>
+            <br>
+
+            
+            <div class="containerb">
+            <h2 class="text">FISÍCO</h2>
+            <div class="campo">
+                
+                <table>
+                    <tbody>
+                        <tr>
+                            <td> <label>ALTURA: </label></tr>
+                            <td> <input class="area" type="text" asp-for="@Model.Tamanho"></tr>
+                        </tr>
+                        <tr>
+                            <td> <label>IDADE: </label></tr>
+                            <td><input class="area" type="text" asp-for="@Model.Idade"></tr>
+                        </tr>
+                        <tr>
+                            <td><label>PESO: </label></tr>
+                            <td> <input class="area" type="text" asp-for="@Model.Peso"></tr>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            </div>
+
+            <div class="containerb">
+                <h2 class="text">APARÊNCIA</h2>
+                <div class="campo">
+                
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td> <label>OLHOS: </label></tr>
+                                <td> <input class="area" type="text" asp-for="@Model.Olhos"></tr>
+                            </tr>
+                            <tr>
+                                <td> <label>CABELOS: </label></tr>
+                                <td><input class="area" type="text" asp-for="@Model.Cabelos"></tr>
+                            </tr>
+                            <tr>
+                                <td><label>PELE: </label></tr>
+                                <td> <input class="area" type="text" asp-for="@Model.Pele"></tr>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        
+           <br>
+           <br>
+           <br>
+            <br>
+            <label style="margin-left: 10px" class="text">NÍVEL</label>
+            <br>
+            <input class="area" type="text" asp-for="@Model.Nivel">
+            <br>
+            
+            <div class="money" onchange="checado()">
+                <div style="width: 100%">
+                    <input type="radio" name="monetario" checked>
+                    <p>Usar balanço monetário padrão</p>
+                </div>
+                <hr>
+                <div>
+                    <input type="radio" name="monetario" id="checado">
+                    <p>Usar balanço monetário personalizado</p>
+                </div>
+            </div>
+        </div>
+        <div id="monetariopersonalizado">
+            <p>Peças de Cobre</p>
+            <input type="text" asp-for="@Model.PC" class="dinheiro">
+            <hr>
+            <p>Peças de Prata</p>
+            <input type="text" asp-for="@Model.PP" class="dinheiro">
+            <hr>
+            <p>Peças de Electra</p>
+            <input type="text" asp-for="@Model.PE" class="dinheiro">
+            <hr>
+            <p>Peças de Ouro</p>
+            <input type="text" asp-for="@Model.PO" class="dinheiro">
+            <hr>
+            <p>Peças de Platina</p>
+            <input type="text" asp-for="@Model.PL" class="dinheiro">
+            <hr>
+        </div>
+        <br>
+        <br>
+        
+        <button class="bt2" style="text-align: center; margin-left: 40%; margin-bottom: 5px" type="submit"
+            asp-route-IdPersonagem="@Model.IdPersonagem">SAVE</button>
+    </form>
+</div>

@@ -1,0 +1,446 @@
+@model Personagem;
+<div class="modal fade" id="_EscolherPericiaModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+                <div class="modal=body">
+                    <div class="box1">
+                        <h1 style="margin: 10px">Selecione suas perícias</h1>
+                        <hr>
+                        <div style="justify-self: center; clear:right; position:static">
+
+                            <h3>Perícias de Classe:</h3>
+
+                            @{
+                                string acrobacia = "Acrobacia";
+                                string arcanismo = "Arcanismo";
+                                string atletismo = "Atletismo";
+                                string atuacao = "Atuação";
+                                string enganacao = "Enganação";
+                                string furtividade = "Furtividade";
+                                string historia = "História";
+                                string intimidacao = "Intimidação";
+                                string intuicao = "Intuição";
+                                string investigacao = "Investigação";
+                                string lidarcomanimais = "LidarcomAnimais";
+                                string medicina = "Medicina";
+                                string natureza = "Natureza";
+                                string percepcao = "Percepção";
+                                string persuasao = "Persuasão";
+                                string prestidigitacao = "Prestidigitação";
+                                string religiao = "Religião";
+                                string sobrevivencia = "Sobrevivência";
+
+                                @foreach (var listaclasse in @ViewBag.listaclasse)
+                                {
+                                    if (Model.IdClasse == listaclasse.IdClasse)
+                                    {
+                                        <h5>@listaclasse.Nome</h5>
+
+                                        if (Model.IdClasse == 1)
+                                        {
+                                            @* 
+                                                <input type="radio" id='PericiaAcrobacia' asp-for="@Model.Acrobacia" value=@true>
+                                                <label for='PericiaAcrobacia'>Acrobacia</label>
+                                                <br>
+                                                <input type="radio" id="PericiaLidarcomAnimais" asp-for="@Model.LidarcomAnimais" value=@true>
+                                                <label for='PericiaLidarcomAnimais'>Adestramento</label>
+                                                <br>
+                                                <input type="radio" id="PericiaArcanismo" asp-for="@Model.Arcanismo" value=@true>
+                                                <label for='PericiaArcanismo'>Arcanismo</label>
+                                                <br>
+                                                <input type="radio" id="PericiaAtletismo" asp-for="@Model.Atletismo" value=@true>
+                                                <label for='PericiaAtletismo'>Atletismo</label>
+                                                <br>
+                                                <input type="radio" id="PericiaAtuacao" asp-for="@Model.Atuacao" value=@true>
+                                                <label for='PericiaAtuacao'>Atuação</label>
+                                                <br>
+                                                <input type="radio" id="PericiaEnganacao" asp-for="@Model.Enganacao" value=@true>
+                                                <label for='PericiaEnganacao'>Enganação</label>
+                                                <br>
+                                                <input type="radio" id="PericiaFurtividade" asp-for="@Model.Furtividade" value=@true>
+                                                <label for='PericiaFurtividade'>Furtividade</label>
+                                                <br>
+                                                <input type="radio" id="PericiaHistoria" asp-for="@Model.Historia" value=@true>
+                                                <label for='PericiaHistoria'>História</label>
+                                                <br>
+                                                <input type="radio" id="PericiaIntimidacao" asp-for="@Model.Intimidacao" value=@true>
+                                                <label for='PericiaIntimidacao'>Intimidação</label>
+                                                <br>
+                                                <input type="radio" id="PericiaIntuicao" asp-for="@Model.Intuicao" value=@true>
+                                                <label for='PericiaIntuicao'>Intuição</label>
+                                                <br>
+                                                <input type="radio" id="PericiaInvestigacao" asp-for="@Model.Investigacao" value=@true>
+                                                <label for='PericiaInvestigacao'>Investigação</label>
+                                                <br>
+                                                <input type="radio" id="PericiaMedicina" asp-for="@Model.Medicina" value=@true>
+                                                <label for='PericiaMedicina'>Medicina</label>
+                                                <br>
+                                                <input type="radio" id="PericiaNatureza" asp-for="@Model.Natureza" value=@true>
+                                                <label for='PericiaNatureza'>Natureza</label>
+                                                <br>
+                                                <input type="radio" id="PericiaPercepcao" asp-for="@Model.Percepcao" value=@true>
+                                                <label for='PericiaPercepcao'>Percepção</label>
+                                                <br>
+                                                <input type="radio" id="PericiaPersuasao" asp-for="@Model.Persuasao" value=@true>
+                                                <label for='PericiaPersuasao'>Persuasão</label>
+                                                <br>
+                                                <input type="radio" id="PericiaPrestidigitacao" asp-for="@Model.Prestidigitacao" value=@true>
+                                                <label for='PericiaPrestidigitacao'>Prestidigitação</label>
+                                                <br>
+                                                <input type="radio" id="PericiaReligiao" asp-for="@Model.Religiao" value=@true>
+                                                <label for='PericiaReligiao'>Religião</label>
+                                                <br>
+                                                <input type="radio" id="PericiaSobrevivencia" asp-for="@Model.Sobrevivencia" value=@true>
+                                                <label for='PericiaSobrevivencia'>Sobrevivência</label>
+                                                <br>
+
+                                             *@
+
+
+                                            <h6>Escolha duas entre:</h6>
+                                            <br>
+                                            <input type="radio" id="PericiaLidarcomAnimais" asp-for="@Model.LidarcomAnimais" value=@true>
+                                                <label for='PericiaLidarcomAnimais'>Adestramento</label>
+                                                <br>
+                                                <input type="radio" id="PericiaAtletismo" asp-for="@Model.Atletismo" value=@true>
+                                                <label for='PericiaAtletismo'>Atletismo</label>
+                                                <br>
+                                                <input type="radio" id="PericiaIntimidacao" asp-for="@Model.Intimidacao" value=@true>
+                                                <label for='PericiaIntimidacao'>Intimidação</label>
+                                                <br>
+                                                <input type="radio" id="PericiaNatureza" asp-for="@Model.Natureza" value=@true>
+                                                <label for='PericiaNatureza'>Natureza</label>
+                                                <br>
+                                                <input type="radio" id="PericiaPercepcao" asp-for="@Model.Percepcao" value=@true>
+                                                <label for='PericiaPercepcao'>Percepção</label>
+                                                <br>
+                                                <input type="radio" id="PericiaSobrevivencia" asp-for="@Model.Sobrevivencia" value=@true>
+                                                <label for='PericiaSobrevivencia'>Sobrevivência</label>
+                                                <br>
+                                        }
+                                        else if(Model.IdClasse == 2){
+                                            <h6>Escolha três:</h6>
+                                            <br>
+                                            <input type="radio" id='PericiaAcrobacia' asp-for="@Model.Acrobacia" value=@true>
+                                            <label for='PericiaAcrobacia'>Acrobacia</label>
+                                            <br>
+                                            <input type="radio" id="PericiaLidarcomAnimais" asp-for="@Model.LidarcomAnimais" value=@true>
+                                            <label for='PericiaLidarcomAnimais'>Adestramento</label>
+                                            <br>
+                                            <input type="radio" id="PericiaArcanismo" asp-for="@Model.Arcanismo" value=@true>
+                                            <label for='PericiaArcanismo'>Arcanismo</label>
+                                            <br>
+                                            <input type="radio" id="PericiaAtletismo" asp-for="@Model.Atletismo" value=@true>
+                                            <label for='PericiaAtletismo'>Atletismo</label>
+                                            <br>
+                                            <input type="radio" id="PericiaAtuacao" asp-for="@Model.Atuacao" value=@true>
+                                            <label for='PericiaAtuacao'>Atuação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaEnganacao" asp-for="@Model.Enganacao" value=@true>
+                                            <label for='PericiaEnganacao'>Enganação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaFurtividade" asp-for="@Model.Furtividade" value=@true>
+                                            <label for='PericiaFurtividade'>Furtividade</label>
+                                            <br>
+                                            <input type="radio" id="PericiaHistoria" asp-for="@Model.Historia" value=@true>
+                                            <label for='PericiaHistoria'>História</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntimidacao" asp-for="@Model.Intimidacao" value=@true>
+                                            <label for='PericiaIntimidacao'>Intimidação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntuicao" asp-for="@Model.Intuicao" value=@true>
+                                            <label for='PericiaIntuicao'>Intuição</label>
+                                            <br>
+                                            <input type="radio" id="PericiaInvestigacao" asp-for="@Model.Investigacao" value=@true>
+                                            <label for='PericiaInvestigacao'>Investigação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaMedicina" asp-for="@Model.Medicina" value=@true>
+                                            <label for='PericiaMedicina'>Medicina</label>
+                                            <br>
+                                            <input type="radio" id="PericiaNatureza" asp-for="@Model.Natureza" value=@true>
+                                            <label for='PericiaNatureza'>Natureza</label>
+                                            <br>
+                                            <input type="radio" id="PericiaPercepcao" asp-for="@Model.Percepcao" value=@true>
+                                            <label for='PericiaPercepcao'>Percepção</label>
+                                            <br>
+                                            <input type="radio" id="PericiaPersuasao" asp-for="@Model.Persuasao" value=@true>
+                                            <label for='PericiaPersuasao'>Persuasão</label>
+                                            <br>
+                                            <input type="radio" id="PericiaPrestidigitacao" asp-for="@Model.Prestidigitacao" value=@true>
+                                            <label for='PericiaPrestidigitacao'>Prestidigitação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaReligiao" asp-for="@Model.Religiao" value=@true>
+                                            <label for='PericiaReligiao'>Religião</label>
+                                            <br>
+                                            <input type="radio" id="PericiaSobrevivencia" asp-for="@Model.Sobrevivencia" value=@true>
+                                            <label for='PericiaSobrevivencia'>Sobrevivência</label>
+                                            <br>
+                                        }
+                                        else if(Model.IdClasse == 3){
+                                            <h6>Escolha duas entre:</h6>
+                                            <br>
+                                            <input type="radio" id="PericiaArcanismo" asp-for="@Model.Arcanismo" value=@true>
+                                            <label for='PericiaArcanismo'>Arcanismo</label>
+                                            <br>
+                                            <input type="radio" id="PericiaEnganacao" asp-for="@Model.Enganacao" value=@true>
+                                            <label for='PericiaEnganacao'>Enganação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaHistoria" asp-for="@Model.Historia" value=@true>
+                                            <label for='PericiaHistoria'>História</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntimidacao" asp-for="@Model.Intimidacao" value=@true>
+                                            <label for='PericiaIntimidacao'>Intimidação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaInvestigacao" asp-for="@Model.Investigacao" value=@true>
+                                            <label for='PericiaInvestigacao'>Investigação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaNatureza" asp-for="@Model.Natureza" value=@true>
+                                            <label for='PericiaNatureza'>Natureza</label>
+                                            <br>
+                                            <input type="radio" id="PericiaReligiao" asp-for="@Model.Religiao" value=@true>
+                                            <label for='PericiaReligiao'>Religião</label>
+                                            <br>
+                                        }
+                                        else if(Model.IdClasse == 4){
+                                            <h6>Escolha duas entre:</h6>
+                                            <br>
+                                            <input type="radio" id="PericiaHistoria" asp-for="@Model.Historia" value=@true>
+                                            <label for='PericiaHistoria'>História</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntuicao" asp-for="@Model.Intuicao" value=@true>
+                                            <label for='PericiaIntuicao'>Intuição</label>
+                                            <br>
+                                            <input type="radio" id="PericiaMedicina" asp-for="@Model.Medicina" value=@true>
+                                            <label for='PericiaMedicina'>Medicina</label>
+                                            <br>
+                                            <input type="radio" id="PericiaPersuasao" asp-for="@Model.Persuasao" value=@true>
+                                            <label for='PericiaPersuasao'>Persuasão</label>
+                                            <br>
+                                            <input type="radio" id="PericiaReligiao" asp-for="@Model.Religiao" value=@true>
+                                            <label for='PericiaReligiao'>Religião</label>
+                                            <br>
+                                        }
+                                        else if(Model.IdClasse == 5){
+                                            <h6>Escolha duas entre: </h6>
+                                            <br>
+                                            <input type="radio" id="PericiaLidarcomAnimais" asp-for="@Model.LidarcomAnimais" value=@true>
+                                            <label for='PericiaLidarcomAnimais'>Adestramento</label>
+                                            <br>
+                                            <input type="radio" id="PericiaArcanismo" asp-for="@Model.Arcanismo" value=@true>
+                                            <label for='PericiaArcanismo'>Arcanismo</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntuicao" asp-for="@Model.Intuicao" value=@true>
+                                            <label for='PericiaIntuicao'>Intuição</label>
+                                            <br>
+                                            <input type="radio" id="PericiaMedicina" asp-for="@Model.Medicina" value=@true>
+                                            <label for='PericiaMedicina'>Medicina</label>
+                                            <br>
+                                            <input type="radio" id="PericiaNatureza" asp-for="@Model.Natureza" value=@true>
+                                            <label for='PericiaNatureza'>Natureza</label>
+                                            <br>
+                                            <input type="radio" id="PericiaPercepcao" asp-for="@Model.Percepcao" value=@true>
+                                            <label for='PericiaPercepcao'>Percepção</label>
+                                            <br>
+                                            <input type="radio" id="PericiaReligiao" asp-for="@Model.Religiao" value=@true>
+                                            <label for='PericiaReligiao'>Religião</label>
+                                            <br>
+                                            <input type="radio" id="PericiaSobrevivencia" asp-for="@Model.Sobrevivencia" value=@true>
+                                            <label for='PericiaSobrevivencia'>Sobrevivência</label>
+                                            <br>
+                                        }
+                                        else if(Model.IdClasse == 6){
+                                            <h6>Escolha duas entre: </h6>
+                                            <input type="radio" id="PericiaArcanismo" asp-for="@Model.Arcanismo" value=@true>
+                                            <label for='PericiaArcanismo'>Arcanismo</label>
+                                            <br>
+                                            <input type="radio" id="PericiaEnganacao" asp-for="@Model.Enganacao" value=@true>
+                                            <label for='PericiaEnganacao'>Enganação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntimidacao" asp-for="@Model.Intimidacao" value=@true>
+                                            <label for='PericiaIntimidacao'>Intimidação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntuicao" asp-for="@Model.Intuicao" value=@true>
+                                            <label for='PericiaIntuicao'>Intuição</label>
+                                            <br>
+                                            <input type="radio" id="PericiaPersuasao" asp-for="@Model.Persuasao" value=@true>
+                                            <label for='PericiaPersuasao'>Persuasão</label>
+                                            <br>
+                                            <input type="radio" id="PericiaReligiao" asp-for="@Model.Religiao" value=@true>
+                                            <label for='PericiaReligiao'>Religião</label>
+                                            <br>
+                                        }
+                                        else if(Model.IdClasse == 7){
+                                            <h6>Escolha duas entre:</h6>
+                                            <br>
+                                            <input type="radio" id='PericiaAcrobacia' asp-for="@Model.Acrobacia" value=@true>
+                                            <label for='PericiaAcrobacia'>Acrobacia</label>
+                                            <br>
+                                            <input type="radio" id="PericiaLidarcomAnimais" asp-for="@Model.LidarcomAnimais" value=@true>
+                                            <label for='PericiaLidarcomAnimais'>Adestramento</label>
+                                            <br>
+                                            <input type="radio" id="PericiaAtletismo" asp-for="@Model.Atletismo" value=@true>
+                                            <label for='PericiaAtletismo'>Atletismo</label>
+                                            <br>
+                                            <input type="radio" id="PericiaHistoria" asp-for="@Model.Historia" value=@true>
+                                            <label for='PericiaHistoria'>História</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntimidacao" asp-for="@Model.Intimidacao" value=@true>
+                                            <label for='PericiaIntimidacao'>Intimidação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntuicao" asp-for="@Model.Intuicao" value=@true>
+                                            <label for='PericiaIntuicao'>Intuição</label>
+                                            <br>
+                                            <input type="radio" id="PericiaPercepcao" asp-for="@Model.Percepcao" value=@true>
+                                            <label for='PericiaPercepcao'>Percepção</label>
+                                            <br>
+                                            <input type="radio" id="PericiaSobrevivencia" asp-for="@Model.Sobrevivencia" value=@true>
+                                            <label for='PericiaSobrevivencia'>Sobrevivência</label>
+                                            <br>
+                                        }
+                                        else if(Model.IdClasse == 8){
+                                            <h6>Escolha quatro dentre:</h6>
+                                            <br>
+                                            <input type="radio" id='PericiaAcrobacia' asp-for="@Model.Acrobacia" value=@true>
+                                            <label for='PericiaAcrobacia'>Acrobacia</label>
+                                            <br>
+                                            <input type="radio" id="PericiaAtletismo" asp-for="@Model.Atletismo" value=@true>
+                                            <label for='PericiaAtletismo'>Atletismo</label>
+                                            <br>
+                                            <input type="radio" id="PericiaAtuacao" asp-for="@Model.Atuacao" value=@true>
+                                            <label for='PericiaAtuacao'>Atuação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaEnganacao" asp-for="@Model.Enganacao" value=@true>
+                                            <label for='PericiaEnganacao'>Enganação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaFurtividade" asp-for="@Model.Furtividade" value=@true>
+                                            <label for='PericiaFurtividade'>Furtividade</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntimidacao" asp-for="@Model.Intimidacao" value=@true>
+                                            <label for='PericiaIntimidacao'>Intimidação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntuicao" asp-for="@Model.Intuicao" value=@true>
+                                            <label for='PericiaIntuicao'>Intuição</label>
+                                            <br>
+                                            <input type="radio" id="PericiaInvestigacao" asp-for="@Model.Investigacao" value=@true>
+                                            <label for='PericiaInvestigacao'>Investigação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaPercepcao" asp-for="@Model.Percepcao" value=@true>
+                                            <label for='PericiaPercepcao'>Percepção</label>
+                                            <br>
+                                            <input type="radio" id="PericiaPersuasao" asp-for="@Model.Persuasao" value=@true>
+                                            <label for='PericiaPersuasao'>Persuasão</label>
+                                            <br>
+                                            <input type="radio" id="PericiaPrestidigitacao" asp-for="@Model.Prestidigitacao" value=@true>
+                                            <label for='PericiaPrestidigitacao'>Prestidigitação</label>
+                                            <br>
+
+                                        }
+                                        else if(Model.IdClasse == 9){
+                                            <h6>Escolha duas dentre:</h6>
+                                            <br>
+                                            <input type="radio" id="PericiaArcanismo" asp-for="@Model.Arcanismo" value=@true>
+                                            <label for='PericiaArcanismo'>Arcanismo</label>
+                                            <br>
+                                            <input type="radio" id="PericiaHistoria" asp-for="@Model.Historia" value=@true>
+                                            <label for='PericiaHistoria'>História</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntuicao" asp-for="@Model.Intuicao" value=@true>
+                                            <label for='PericiaIntuicao'>Intuição</label>
+                                            <br>
+                                            <input type="radio" id="PericiaInvestigacao" asp-for="@Model.Investigacao" value=@true>
+                                            <label for='PericiaInvestigacao'>Investigação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaMedicina" asp-for="@Model.Medicina" value=@true>
+                                            <label for='PericiaMedicina'>Medicina</label>
+                                            <br>
+                                            <input type="radio" id="PericiaReligiao" asp-for="@Model.Religiao" value=@true>
+                                            <label for='PericiaReligiao'>Religião</label>
+                                            <br>
+
+                                        }
+                                        else if(Model.IdClasse == 10){
+                                            <h6>Escolha duas dentre:</h6>
+                                            <br>
+                                            <input type="radio" id='PericiaAcrobacia' asp-for="@Model.Acrobacia" value=@true>
+                                            <label for='PericiaAcrobacia'>Acrobacia</label>
+                                            <br>
+                                            <input type="radio" id="PericiaAtletismo" asp-for="@Model.Atletismo" value=@true>
+                                            <label for='PericiaAtletismo'>Atletismo</label>
+                                            <br>
+                                            <input type="radio" id="PericiaFurtividade" asp-for="@Model.Furtividade" value=@true>
+                                            <label for='PericiaFurtividade'>Furtividade</label>
+                                            <br>
+                                            <input type="radio" id="PericiaHistoria" asp-for="@Model.Historia" value=@true>
+                                            <label for='PericiaHistoria'>História</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntuicao" asp-for="@Model.Intuicao" value=@true>
+                                            <label for='PericiaIntuicao'>Intuição</label>
+                                            <br>
+                                            <input type="radio" id="PericiaReligiao" asp-for="@Model.Religiao" value=@true>
+                                            <label for='PericiaReligiao'>Religião</label>
+                                            <br>
+                                        }
+                                        else if(Model.IdClasse == 11){
+                                            <h6>Escolha duas dentre:</h6>
+                                            <br>
+                                            <input type="radio" id="PericiaAtletismo" asp-for="@Model.Atletismo" value=@true>
+                                            <label for='PericiaAtletismo'>Atletismo</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntimidacao" asp-for="@Model.Intimidacao" value=@true>
+                                            <label for='PericiaIntimidacao'>Intimidação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntuicao" asp-for="@Model.Intuicao" value=@true>
+                                            <label for='PericiaIntuicao'>Intuição</label>
+                                            <br>
+                                            <input type="radio" id="PericiaMedicina" asp-for="@Model.Medicina" value=@true>
+                                            <label for='PericiaMedicina'>Medicina</label>
+                                            <br>
+                                            <input type="radio" id="PericiaPersuasao" asp-for="@Model.Persuasao" value=@true>
+                                            <label for='PericiaPersuasao'>Persuasão</label>
+                                            <br>
+                                            <input type="radio" id="PericiaReligiao" asp-for="@Model.Religiao" value=@true>
+                                            <label for='PericiaReligiao'>Religião</label>
+                                            <br>
+
+                                        }
+                                        else if(Model.IdClasse == 12){
+                                            <h6>Escolha três dentre:</h6>
+                                            <br>
+                                            <input type="radio" id="PericiaLidarcomAnimais" asp-for="@Model.LidarcomAnimais" value=@true>
+                                            <label for='PericiaLidarcomAnimais'>Adestramento</label>
+                                            <br>
+                                            <input type="radio" id="PericiaAtletismo" asp-for="@Model.Atletismo" value=@true>
+                                            <label for='PericiaAtletismo'>Atletismo</label>
+                                            <br>
+                                            <input type="radio" id="PericiaFurtividade" asp-for="@Model.Furtividade" value=@true>
+                                            <label for='PericiaFurtividade'>Furtividade</label>
+                                            <br>
+                                            <input type="radio" id="PericiaIntuicao" asp-for="@Model.Intuicao" value=@true>
+                                            <label for='PericiaIntuicao'>Intuição</label>
+                                            <br>
+                                            <input type="radio" id="PericiaInvestigacao" asp-for="@Model.Investigacao" value=@true>
+                                            <label for='PericiaInvestigacao'>Investigação</label>
+                                            <br>
+                                            <input type="radio" id="PericiaNatureza" asp-for="@Model.Natureza" value=@true>
+                                            <label for='PericiaNatureza'>Natureza</label>
+                                            <br>
+                                            <input type="radio" id="PericiaSobrevivencia" asp-for="@Model.Sobrevivencia" value=@true>
+                                            <label for='PericiaSobrevivencia'>Sobrevivência</label>
+                                            <br>
+                                        }
+                                    }
+                                }
+                            }
+                    </div>
+                </div>
+                    
+                    <button type="submit">Confirmar</button>
+            </div>
+        </div>
+    </div>
+</div>
+

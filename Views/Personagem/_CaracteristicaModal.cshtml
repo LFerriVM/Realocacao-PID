@@ -1,0 +1,63 @@
+@model Personagem;
+<script src="~/js/mostrar_caracteristica.js"></script>
+<div class="modal fade" id="_CaracteristicaModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-md" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">Características e Talentos</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    @{
+                        string habilidade_nome = "";
+                        string habilidade_descricao = "";
+                        <div class="col-6">
+
+
+                            @foreach (var listahabilidaderaca in @ViewBag.listahabilidaderaca)
+                            {
+                                @foreach (var listahabilidade in @ViewBag.listahabilidade)
+                                {
+                                    @if (listahabilidaderaca.IdRaca == @Model.IdRaca && listahabilidade.IdHabilidadeRacial ==
+                               listahabilidaderaca.IdHabilidadeRacial)
+                                    {
+                                        habilidade_nome += "<option value='Caracteristica"+@listahabilidade.IdHabilidadeRacial+"'>" + @listahabilidade.Nome + "</option>";
+                                        habilidade_descricao += "<p id='Caracteristica"+@listahabilidade.IdHabilidadeRacial+"' class='habilidade_descricao' style='visibility: hidden; display: none'>" + @listahabilidade.Descricao + "</p>";
+
+                                    }
+                                }
+                            }
+                            @foreach (var listahabilidadesubraca in @ViewBag.listahabilidadesubraca)
+                            {
+                                @foreach (var listahabilidade in @ViewBag.listahabilidade)
+                                {
+                                    @if (listahabilidadesubraca.IdSubRaca == @Model.IdSubRaca && listahabilidade.IdHabilidadeRacial
+                               ==
+                               listahabilidadesubraca.IdHabilidadeRacial)
+                                    {
+                                        habilidade_nome += "<option value='Caracteristica"+@listahabilidade.IdHabilidadeRacial+"'>" + @listahabilidade.Nome + "</option>";
+                                        habilidade_descricao += "<p id='Caracteristica"+@listahabilidade.IdHabilidadeRacial+"' class='habilidade_descricao' style='visibility: hidden; display: none'>" + @listahabilidade.Descricao + "</p>";
+                                    }
+                                }
+                            }
+                            @* <textarea rows="10" class="w-100 border-0" readonly>@Html.Raw(@habilidade_nome)</textarea> *@
+                            <select id="select_caracteristica" onchange="mostrar_caracteristica()" class="w-100">
+                                <option default>Escolha</option>
+                                @Html.Raw(@habilidade_nome)
+                            </select>
+                        </div>
+                        <div class="col-6">
+                            <p class="lead">@Html.Raw(@habilidade_descricao)</p>
+                        </div>
+                    }
+                </div>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>

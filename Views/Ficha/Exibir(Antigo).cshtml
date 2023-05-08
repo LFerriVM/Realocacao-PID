@@ -1,0 +1,552 @@
+@model Personagem;
+<style>
+    .CA{
+        background-image: url(/png/Escudo.png); 
+        @* width: 100%;  *@
+        height: 100%; 
+        background-position: center; 
+        background-repeat: no-repeat; 
+        background-size: cover; 
+        background-clip: cover;
+    }
+    .bg-fundo{
+        background-color: rgba(210, 210, 210, 255)
+    }
+    .bg-fundoclaro{
+        background-color: rgba(225, 225, 225, 255)
+    }
+    .h-vh{
+        height: 100vh
+    }
+    .h-100{
+        height: 100%
+    }
+</style>
+<div class="container bg bg-fundoclaro" style="min-width: 1000px">
+    <div class="col">
+        @* Nome + Classe/Nível + Raça *@
+        <div class="row mt-4">
+            @* Nome *@
+            <div class="col-5 py-3">
+                <div class="row col">
+                    <div class="col mt-5">
+                        <input type="text" class="w-100" readonly value="@Model.Nome" style="vertical-align: middle"
+                        data-bs-toggle="modal" data-bs-target="#_EscolherNomeModal">
+                        <partial name="~/Views/Personagem/_EscolherNomeModal.cshtml"></partial>
+                        <label class="text-uppercase lead d-block text-left">NOME</label>
+                    </div>
+                    @* <div class="col-3">
+                        <img src="~/png/dadin.png"  class="w-100">
+                    </div> *@
+                </div>
+            </div>
+            <div class="col-7 row border border-3 border-dark rounded m-0">
+                @* Classe/Nivel + Raça *@
+                <div class="col-6 py-3">
+                    <div class="row">
+                        <div class="col-10">
+                        @foreach (var listaclasse in @ViewBag.listaclasse)
+                        {
+                            if (@Model.IdClasse == listaclasse.IdClasse)
+                            {
+                                <input type="text" class="w-100" readonly value='@listaclasse.Nome'
+                            data-bs-target="#_DetalheClasseModal" data-bs-toggle="modal">
+                                <partial name="~/Views/Classe/_DetalheClasseModal.cshtml"></partial>
+                            }
+                        }
+                        @if (@Model.IdClasse == null)
+                        {
+                            <input type="text" class="w-100" readonly data-bs-toggle="modal" data-bs-target="#_EscolherClasseModal">
+                        }
+                        @if (@Model.IdRaca is not null)
+                        {
+                            <partial name="~/Views/Classe/_EscolherClasseModal.cshtml"></partial>
+                        }
+                        <label class="text-uppercase small d-block text-left">Classe/Nível</label>
+                    </div>
+                    <div class="col-2 p-0">
+                        <form id="nivel_form" asp-action="AlterarNivel" asp-controller="Personagem">
+                            <input type="number" onfocusout="submit_nivel_form()" asp-for="@Model.Nivel" class="w-100" min=1 max=20>
+                            <input type="hidden" asp-for="@Model.IdPersonagem">
+                        </form>
+                        <script>
+                            function submit_nivel_form() {
+                                document.getElementById("nivel_form").submit();
+                            }
+                        </script>
+                    
+                    </div>
+                </div>
+                        
+                    
+                    <div class="col-6">
+                        @foreach (var listaraca in @ViewBag.listaraca)
+                        {
+                            @if (@Model.IdSubRaca == null && @Model.IdRaca != null && @Model.IdRaca == listaraca.IdRaca)
+                            {
+                                <input type="text" size="25" readonly value="@listaraca.Nome" data-bs-toggle="modal"
+                            data-bs-target="#_DetalheRacaModal">
+                                <partial name="~/Views/Raca/_DetalheRacaModal.cshtml"></partial>
+                            }
+
+                            @if (@Model.IdSubRaca != null)
+                            {
+                                @foreach (var listasubraca in @ViewBag.listasubraca)
+                                {
+                                    if ((@Model.IdSubRaca == listasubraca.IdSubRaca && listasubraca.IdRaca == listaraca.IdRaca &&
+                                    @Model.IdSubRaca != null) || (@Model.IdRaca == listaraca.IdRaca && @Model.IdSubRaca == null))
+                                    {
+                                        <input type="text" size="25" readonly value="@listaraca.Nome - @listasubraca.Nome"
+                            data-bs-toggle="modal" data-bs-target="#_DetalheRacaModal">
+                                        <partial name="~/Views/Raca/_DetalheRacaModal.cshtml"></partial>
+                                    }
+                                }
+                            }
+                        }
+                        @if (@Model.IdRaca == null)
+                        {
+                            <input type="text" size="25" readonly data-bs-toggle="modal" data-bs-target="#_EscolherRacaModal">
+                        }
+                        <partial name="~/Views/Raca/_EscolherRacaModal.cshtml"></partial>
+                        <label class="text-uppercase small d-block text-left">Raça</label>
+                    </div>
+                </div>
+                @* Antecedente+Alinhamento *@
+                <div class="col py-3">
+                    <div class="col row">
+                        @* Antecedente *@
+                        <div class="col">
+                            @foreach (var listaantecedente in @ViewBag.listaantecedente)
+                            {
+                                if (@Model.IdAntecedente == listaantecedente.IdAntecedente)
+                                {
+                                    <input type="text" size="25" readonly value="@listaantecedente.Nome" data-bs-toggle="modal"
+                                data-bs-target="#_DetalheAntecedenteModal">
+                                    <partial name="~/Views/Antecedente/_DetalheAntecedenteModal.cshtml"></partial>
+                                }
+                            }
+                            @if (@Model.IdAntecedente == null)
+                            {
+                                <input type="text" size="25" readonly data-bs-toggle="modal"
+                                data-bs-target="#_EscolherAntecedenteModal">
+                                <partial name="~/Views/Antecedente/_EscolherAntecedenteModal.cshtml"></partial>
+                            }
+                            <label class="text-uppercase small d-block text-left">Antecedente</label>
+                        </div>
+                        @* Alinhamento *@
+                        <div>
+                            @if (@Model.Tendencia == "")
+                            {
+                                <input type="text" size="25" placeholder="Alinhamento" readonly data-bs-toggle="modal"
+                                data-bs-target="#_EscolherTendenciaModal">
+                                <partial name="_EscolherTendenciaModal"></partial>
+                            }
+                            <partial name="_DetalheTendencia"></partial>
+                            <label class="text-uppercase small d-block text-left">Alinhamento</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row mt-4">
+        <div class="col-5">
+            @* Atributos + Iniciativa + B.Proficiencia + Salvaguarda + Pericia *@
+            <div class="row">
+                @* Atributos *@
+                <div class="row bg bg-fundo col-3 p-1 mt-5">
+                        <partial name="~/Views/Atributo/_EscolherAtributoModal.cshtml"></partial>
+                        <partial name="~/Views/Atributo/_AlterarAtributoModal.cshtml"></partial>
+                        <partial name="~/Views/Atributo/_DetalheAtributo.cshtml"></partial>
+                </div>
+                @* Iniciativa + B.Proficiencia + Salvaguarda + Pericia *@
+                <div class="col-8 p-2 ms-3">
+                    @* INSPIRAÇÃO *@
+                    <div class="w-100 px-2 m-2">
+                        <input type="text" value="@Model.ModificadorDestreza" size="1" class=" -dark rounded rounded-circle py-2 text-center">
+                        <label>INSPIRAÇÃO</label>
+                    </div>
+                    @* B.Proficiencia *@
+                    <div class="w-100 px-2 m-2">
+                        <input type="text" class=" -dark rounded rounded-circle py-2 text-center" size="1" asp-for="@Model.BonusProficiencia" readonly>
+                        <label>PROEFICIÊNCIA</label>
+                    </div>
+                    @* Salvaguardas *@
+                    <div class="w-100 p-2 border border-dark m-2">
+                        @if (@Model.IdClasse == null)
+                        {
+                            <partial name="~/Views/Personagem/_SalvaguardaVazia.cshtml"></partial>
+                        }
+                        @foreach (var listaclasse in @ViewBag.listaclasse)
+                        {
+                            @if (listaclasse.IdClasse == @Model.IdClasse)
+                            {
+                                <partial name="~/Views/Personagem/_SalvaguardaPreenchida.cshtml"></partial>
+                            }
+                        }
+                    </div>
+                    @* Pericia *@
+                    <div class="w-100 p-2 m-2">
+                        <br>
+                        <partial name="~/Views/Pericia/_DetalhePericia.cshtml"></partial>
+                        <partial name="~/Views/Pericia/_EscolherPericiaModal.cshtml"></partial>
+                    </div>
+                </div>
+                <div class="col"></div>
+                <div class="row border border-2 border-dark">
+                @* Percepcao Passiva *@
+                <div class="col-2 py-1">
+                    @if (Model.Percepcao is true)
+                    {
+                        <input type="text" size="1" readonly class="text-center"
+                        value='@(Model.ModificadorSabedoria+10+Model.BonusProficiencia)'>
+                    }
+                    else
+                    {
+                        <input type="text" size="1" readonly class="text-center" value='@(Model.ModificadorSabedoria+10)'>
+                    }
+                </div>
+                <div class="col">
+                    <p class="text-uppercase small m-auto pt-2">Percepção Passiva (Sabedoria)</p>
+                </div>
+                
+            </div>
+            <div class="row">
+                <textarea rows="13" class="w-100 -0">
+                    @foreach (var listaidiomapersonagem in @ViewBag.listaidiomapersonagem)
+                    {
+                        @foreach (var listaidioma in @ViewBag.listaidioma)
+                        {
+                            @if (listaidioma.IdIdioma == listaidiomapersonagem.IdIdioma && @Model.IdPersonagem == listaidiomapersonagem.IdPersonagem)
+                            {
+                                @Html.Raw(@listaidioma.Nome + ", ")
+                            }
+                        }
+                    }
+                    @foreach(var listaclasse in @ViewBag.listaclasse)
+                    {
+                        @if(listaclasse.IdClasse == @Model.IdClasse)
+                        {
+                            @Html.Raw(@listaclasse.Proficiencia)
+                        }
+                    }
+
+                </textarea>
+                <label class="text-uppercase small d-block text-center">Idiomas e outras proeficiências</label>
+            </div>
+            </div>
+            @* Percepcao Passiva *@
+            
+        </div>
+        <div class="col">
+            @* C.A + Iniciativa + Deslocamento *@
+                <div class="row bg bg-fundo">
+                    <div class="row col mx-auto">
+                        @* C.A *@
+                        <div class="col-4 mx-auto CA bg bg-white m-2" >
+                            <div class="text-center">
+                                <p class="small pt-2">CA</p>
+                            </div>
+                                @foreach (var listapersonagemarmadura in @ViewBag.listapersonagemarmadura)
+                                {
+                                    @foreach (var listaarmadura in @ViewBag.listaarmadura)
+                                    {
+                                        @if (Model.IdPersonagem == listapersonagemarmadura.IdPersonagem &&
+                                    listapersonagemarmadura.IdArmadura == listaarmadura.IdArmadura &&
+                                    listapersonagemarmadura.IsEquipada == true)
+                                        {
+                                            @if (listaarmadura.IdArmadura < 4)
+                                            {
+                                                <p class="text-center mb-0">@(listaarmadura.ClassedeArmadura+@Model.ModificadorDestreza)&#8205;</p>
+                                            }
+                                            else if (listaarmadura.IdArmadura < 9)
+                                            {
+                                                @if (@Model.ModificadorDestreza > 2)
+                                                {
+                                                    <p class="text-center mb-0">@(listaarmadura.ClassedeArmadura+2)</p>
+                                                }
+                                                else
+                                                {
+                                                    <p class="text-center mb-0">@(listaarmadura.ClassedeArmadura+Model.ModificadorDestreza)&#8205;</p>
+                                                }
+                                            }
+                                            else if (listaarmadura.IdArmadura < 13)
+                                            {
+                                                <p class="text-center mb-0">@(listaarmadura.ClassedeArmadura)&#8205;</p>
+                                            }
+                                        }       
+                                    }
+                                }
+                        </div>
+                        @* Iniciativa *@
+                        <div class="col-4 mx-auto bg bg-white m-2 border border-dark">
+                            <div class="text-center">
+                                <p class="small pt-2" >Iniciativa</p>
+                            </div>
+                            <div class="text-center w-50 m-auto">
+                                <p class="text-center">@Html.Raw((Model.ModificadorDestreza+"&#8205;")) </p>
+                            </div>
+                        </div>
+                        @* Deslocamento *@
+                        <div class="col-4 mx-auto bg bg-white m-2 ">
+                            <div class="w-100 text-center">
+                                <p class="small pt-2">Deslocamento</p>
+                            </div>
+                            <div class="w-100 text-center">
+                                @foreach (var listaraca in @ViewBag.listaraca)
+                                {
+                                    @if (listaraca.IdRaca == Model.IdRaca)
+                                    {
+                                        <p class="text-center">@(listaraca.Deslocamento)</p>
+                                    }
+                                }
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row mx-3 mx-auto">
+                        <center>
+                            <div class="col-6 my-3 bg bg-white">
+                                <div class="row px-0">
+                                    <div class="col-12 w-100 mb-3">
+                                        @if(@Model.IdClasse is not null && @Model.ModificadorConstituicao is not null)
+                                        {
+                                            <form method="POST" id="form_setVidaTotal" asp-action="setVidaTotal" asp-controller="Personagem">
+                                                @{
+                                                    int DadoVida = 0;
+                                                }
+                                                <input type="hidden" asp-for="@Model.IdPersonagem">
+                                                <input type="hidden" value="@Model.Classe.DadoVida" asp-for="@DadoVida">
+                                            </form>
+                                        }
+                                        <label>Pontos de Vida</label>
+                                        <div class="row d-flex" >
+                                            <div class="col mx-auto">
+                                                <form method="POST" id="form_setVidaAtual" asp-action="setVidaAtual" asp-controller="Personagem">
+                                                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                                                    <input id="input_pvAtual" type="number" class="border-0 mt-1 ms-2 ps-0 w-100 text-end" onfocusout="submit_form_setVidaAtual()" asp-for="@Model.VidaAtual">
+                                                </form>
+                                            </div>
+                                            <div class="col">
+                                                <p class="lead text-start" onclick="submit_form_setVidaTotal()">/@Model.VidaTotal</p>
+                                            </div>
+                                            
+                                            <script>
+                                                function submit_form_setVidaTotal()
+                                                {
+                                                    document.getElementById("form_setVidaTotal").submit();
+                                                }
+                                                function submit_form_setVidaAtual()
+                                                {
+                                                    document.getElementById("form_setVidaAtual").submit();
+                                                }
+                                            </script>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </center>
+                        <div class="row px-0 mx-auto mb-3">
+                            <div class="col float-start px-0 mx-2 bg bg-light">
+                                @foreach (var listaclasse in @ViewBag.listaclasse)
+                                {
+                                    @if (listaclasse.IdClasse == Model.IdClasse)
+                                    {
+                                        <label class="fs-4">@Html.Raw("D"+@listaclasse.DadoVida)</label>
+                                    }
+                                }
+                            </div>
+                            <div class="col mx-2 px-0 bg bg-light" style=" float: right">
+                                <div class="w-100">
+                                <label>SUCESSOS</label>
+                                <input type="radio">
+                                <input type="radio">
+                                <input type="radio">
+                            </div>
+                            <div class="w-100">
+                                <label>FRACASSOS</label>
+                                <input type="radio">
+                                <input type="radio">
+                                <input type="radio">
+                            </div>
+                            <div class="w100">
+                                <label class="small">SALVAGUARDA<span style="font-size: 10px">CONTRA</span>MORTE</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row my-4 border border-2 border-dark">
+                <table class="table table-less">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Bônus</th>
+                            <th>Dano/Tipo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        @foreach (var listapersonagemarma in @ViewBag.listapersonagemarma)
+                        {
+                            @foreach (var listaarma in @ViewBag.listaarma)
+                            {
+                                if (listapersonagemarma.IdArma == listaarma.IdArma && listapersonagemarma.IdPersonagem ==
+                                @Model.IdPersonagem && listapersonagemarma.IsEquipada == true)
+                                {
+                                    <tr>
+                                        <td>
+                                            <input type="text" class="-0 bg-secondary w-100" value=@listaarma.Nome>
+                                        </td>
+                                        <td>
+                                            @foreach (var listaproficienciaarma in @ViewBag.listaproficienciaarma)
+                                            {
+                                                @if (listaproficienciaarma.IdArma == listaarma.IdArma &&
+                                               listaproficienciaarma.IdPersonagem == @Model.IdPersonagem)
+                                                {
+                                                    @if (listaarma.IdTipoArma == 2 || listaarma.IdTipoArma == 4)
+                                                    {
+                                                        <input type="text" class="-0 bg-secondary w-100"
+                                    value='@(Model.BonusProficiencia+Model.ModificadorDestreza)'>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="text" class="-0 bg-secondary w-100"
+                                    value='@(Model.BonusProficiencia+Model.ModificadorForca)'>
+                                                    }
+                                                }
+                                                @if ((listaproficienciaarma.IdArma == listaarma.IdArma &&
+                                               listaproficienciaarma.IdPersonagem == @Model.IdPersonagem) is null)
+                                                {
+                                                    @if (listaarma.IdTipoArma == 2 || listaarma.IdTipoArma == 4)
+                                                    {
+                                                        <input type="text" class="-0 bg-secondary w-100"
+                                    value='@(Model.ModificadorDestreza)'>
+                                                    }
+                                                    else
+                                                    {
+                                                        <input type="text" class="-0 bg-secondary w-100"
+                                    value='@(Model.ModificadorForca)'>
+                                                    }
+                                                }
+                                            }
+                                        </td>
+                                        <td>
+                                            <input type="text" class="-0 bg-secondary w-100" value="@listaarma.DadoDano">
+                                        </td>
+                                    </tr>
+                                }
+                            }
+                        }
+                        <tr>
+                            <td><input type="text" class="-0 bg-secondary w-100"></td>
+                            <td><input type="text" class="-0 bg-secondary w-100"></td>
+                            <td><input type="text" class="-0 bg-secondary w-100"></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="row">
+                    <p class="small text-center">ARMAS</p>
+                </div>
+            </div>
+            <div class="row border border-2 border-dark">
+                <div class="col-4 p-0 text-center m-0">
+                    <partial name="~/Views/Personagem/_EscolherDinheiroModal.cshtml"></partial>
+                    <partial name="~/Views/Personagem/_DetalheDinheiro.cshtml"></partial>
+                </div>
+                <div class="col-8 p-0">
+                    <partial name="~/Views/Ficha/_EquipamentoPartial.cshtml"></partial>
+                    <partial name="~/Views/Item/_EscolherItemModal.cshtml"></partial>
+                    <partial name="~/Views/Item/_AlterarItemModal.cshtml"></partial>
+                </div>
+                    <div class="col-12">
+        <p class="text-center text-uppercase small">
+            Equipamento
+        </p>
+    </div>
+            </div>
+        </div>
+        <div class="col ps-5">
+            <div class="row bg bg-fundo p-3 mb-4">
+
+                <div class="col-12  p-0" data-bs-target="#_AlterarTracoModal" data-bs-toggle="modal">
+                    <textarea rows="5" class="w-100 -0" readonly>
+                        @Model.Traco
+                    </textarea>
+                    <label class="text-uppercase small d-block text-center">Traços de Personalidade</label>
+                </div>
+                <form method="POST" asp-action="AlterarTraco" asp-controller="Personagem">
+                    <partial name="~/Views/Personagem/_AlterarTracoModal.cshtml"></partial>
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                </form>
+
+                <div class="col-12  p-0" data-bs-target="#_AlterarIdealModal" data-bs-toggle="modal">
+                    <textarea rows="5" class="w-100 -0" readonly>
+                        @Model.Ideal
+                    </textarea>
+                    <label class="text-uppercase small d-block text-center">Ideais</label>
+                </div>
+                <form method="POST" asp-action="AlterarIdeal" asp-controller="Personagem">
+                    <partial name="~/Views/Personagem/_AlterarIdealModal.cshtml"></partial>
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                </form>
+
+                <div class="col-12  p-0" data-bs-target="#_AlterarVinculoModal" data-bs-toggle="modal">
+                    <textarea rows="5" class="w-100 -0" readonly>
+                        @Model.Vinculo
+                    </textarea>
+                    <label class="text-uppercase small d-block text-center">Vínculos</label>
+                </div>
+                <form method="POST" asp-action="AlterarVinculo" asp-controller="Personagem">
+                    <partial name="~/Views/Personagem/_AlterarVinculoModal.cshtml"></partial>
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                </form>
+
+                <div class="col-12  p-0" data-bs-target="#_AlterarDefeitoModal" data-bs-toggle="modal">
+                    <textarea rows="5" class="w-100 -0" readonly>
+                        @Model.Defeito
+                    </textarea>
+                    <label class="text-uppercase small d-block text-center">Defeitos</label>
+                </div>
+                <form method="POST" asp-action="AlterarDefeito" asp-controller="Personagem">
+                    <partial name="~/Views/Personagem/_AlterarDefeitoModal.cshtml"></partial>
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+                </form>
+
+            </div>
+            <div class="row">
+                <div class="col-12 p-0">
+                    @{
+                        string texto = "";
+                        @foreach (var listahabilidaderaca in @ViewBag.listahabilidaderaca)
+                        {
+                            @foreach (var listahabilidade in @ViewBag.listahabilidade)
+                            {
+                                @if (listahabilidaderaca.IdRaca == @Model.IdRaca && listahabilidade.IdHabilidadeRacial ==
+                           listahabilidaderaca.IdHabilidadeRacial)
+                                {
+                                    texto += listahabilidade.Nome + ", ";
+                                }
+                            }
+                        }
+                        @foreach (var listahabilidadesubraca in @ViewBag.listahabilidadesubraca)
+                        {
+                            @foreach (var listahabilidade in @ViewBag.listahabilidade)
+                            {
+                                @if (listahabilidadesubraca.IdSubRaca == @Model.IdSubRaca && listahabilidade.IdHabilidadeRacial ==
+                           listahabilidadesubraca.IdHabilidadeRacial)
+                                {
+                                    texto += listahabilidade.Nome + ", ";
+                                }
+                            }
+                        }
+                        <textarea rows="10" class="w-100" readonly data-bs-toggle="modal"
+                            data-bs-target="#_CaracteristicaModal">@texto</textarea>
+                    }
+                    <label class="text-uppercase small d-block text-center">Características e Talentos</label>
+                    <partial name="~/Views/Personagem/_CaracteristicaModal.cshtml"></partial>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

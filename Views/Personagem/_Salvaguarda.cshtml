@@ -1,0 +1,92 @@
+@model Personagem;
+<div class="row col p-1 pt-2">
+    <div class="my-2">
+        <input type="checkbox" onclick="return(false)" asp-for="@Model.ForcaBool" value="@Model.ForcaBool">
+        @if (@Model.ForcaBool == true)
+        {
+            <span class="badge text-black bg-white rounded rounded-pill"
+            style="min-width: 10%">@(Model.ModificadorForca+Model.BonusProficiencia)</span>
+        }
+        else
+        {
+            <span class="badge text-black bg-white rounded rounded-pill"
+            style="min-width: 10%">@Model.ModificadorForca</span>
+        }
+        <label>Força</label>
+    </div>
+    <div class="my-2">
+        <input type="checkbox" onclick="return(false)" asp-for="@Model.DestrezaBool" value="@Model.DestrezaBool">
+        @if (@Model.DestrezaBool == true)
+        {
+            <span class="badge text-black bg-white rounded rounded-pill"
+            style="min-width: 10%">@(Model.ModificadorDestreza+Model.BonusProficiencia)</span>
+        }
+        else
+        {
+            <span class="badge text-black bg-white rounded rounded-pill"
+            style="min-width: 10%">@Model.ModificadorDestreza</span>
+        }
+        <label>Destreza</label>
+    </div>
+    <div class="my-2">
+        <input type="checkbox" onclick="return(false)" asp-for="@Model.ConstituicaoBool" value="@Model.ConstituicaoBool">
+        @if (@Model.ConstituicaoBool == true)
+        {
+            <span class="badge text-black bg-white rounded rounded-pill"
+            style="min-width: 10%">@(Model.ModificadorConstituicao+Model.BonusProficiencia)</span>
+        }
+        else
+        {
+            <span class="badge text-black bg-white rounded rounded-pill"
+            style="min-width: 10%">@Model.ModificadorConstituicao</span>
+        }
+        <label>Constituição</label>
+    </div>
+    <div class="my-2">
+        <input type="checkbox" onclick="return(false)" asp-for="@Model.InteligenciaBool" value="@Model.InteligenciaBool">
+        @if (@Model.InteligenciaBool == true)
+        {
+            <span class="badge text-black bg-white rounded rounded-pill"
+            style="min-width: 10%">@(Model.ModificadorInteligencia+Model.BonusProficiencia)</span>
+        }
+        else
+        {
+            <span class="badge text-black bg-white rounded rounded-pill"
+            style="min-width: 10%">@Model.ModificadorInteligencia</span>
+        }
+
+        <label>Inteligência</label>
+    </div>
+    <div class="my-2">
+        <input type="checkbox" onclick="return(false)" asp-for="@Model.SabedoriaBool" value="@Model.SabedoriaBool">
+        @if (@Model.SabedoriaBool == true)
+        {
+            <span class="badge text-black bg-white rounded rounded-pill"
+            style="min-width: 10%">@(Model.ModificadorSabedoria+Model.BonusProficiencia)</span>
+        }
+        else
+        {
+            <span class="badge text-black bg-white rounded rounded-pill"
+            style="min-width: 10%">@Model.ModificadorSabedoria</span>
+        }
+        <label>Sabedoria</label>
+    </div>
+    <div class="my-2">
+        <input type="checkbox" onclick="return(false)" asp-for="@Model.CarismaBool" value="@Model.CarismaBool">
+        @if (@Model.CarismaBool == true)
+        {
+            <span class="badge text-black bg-white rounded rounded-pill"
+            style="min-width: 10%">@(Model.ModificadorCarisma+Model.BonusProficiencia)</span>
+        }
+        else
+        {
+            <span class="badge text-black bg-white rounded rounded-pill"
+            style="min-width: 10%">@Model.ModificadorCarisma</span>
+        }
+        <label>Carisma</label>
+    </div>
+    <br>
+    <div class="my-2">
+        <label class="text-uppercase small d-block text-center">Salvaguarda</label>
+    </div>
+</div>

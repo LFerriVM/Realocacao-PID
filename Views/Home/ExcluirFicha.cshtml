@@ -1,0 +1,14 @@
+@model Personagem
+
+<h2>Exclusão de Personagem</h2>
+
+<h3>Deseja realmente excluir o Personagem @Model.Nome?</h3>
+
+<hr>
+
+<form method="POST" asp-action="ProcessarExcluir">
+    <input type="hidden" asp-for="@Model.IdPersonagem">
+    <a asp-controller="Home" asp-action="Index">Não</a>
+    <br>
+    <button class="bt2" type="submit">Sim</button>
+</form>

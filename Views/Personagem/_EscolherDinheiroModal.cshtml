@@ -1,0 +1,68 @@
+@model Personagem;
+<div class="modal fade" id="_EscolherDinheiroModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-sm" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title texto-2" id="modalTitleId">Escolher dinheiro</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form method="POST" asp-action="EscolherDinheiro" asp-controller="Personagem">
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+
+                    <div class="row text-center mx-auto">
+                        <div class="col-2 mx-auto text-center px-0 me-0">
+                            <label class="m-auto">PC</label>
+                        </div>
+                        <div class="col-4 mx-auto ms-0 text-center">
+                            <input type="number" class="w-100 border border-1 border-dark text-center mx-auto"
+                                asp-for="@Model.PC" value="@Model.PC">
+                        </div>
+                    </div>
+                    <div class="row text-center mx-auto">
+                        <div class="col-2 mx-auto text-center px-0 me-0">
+                            <label class="m-auto">PP</label>
+                        </div>
+                        <div class="col-4 mx-auto ms-0 text-center">
+                            <input type="number" class="w-100 border border-1 border-dark text-center mx-auto"
+                                asp-for="@Model.PP" value="@Model.PP">
+                        </div>
+                    </div>
+                    <div class="row text-center mx-auto">
+                        <div class="col-2 mx-auto text-center px-0 me-0">
+                            <label class="m-auto">PE</label>
+                        </div>
+                        <div class="col-4 mx-auto ms-0 text-center">
+                            <input type="number" class="w-100 border border-1 border-dark text-center mx-auto" asp-for="@Model.PE"
+                            value="@Model.PE">
+                        </div>
+                    </div>
+                    <div class="row text-center mx-auto">
+                        <div class="col-2 mx-auto text-center px-0 me-0">
+                            <label class="m-auto">PO</label>
+                        </div>
+                        <div class="col-4 mx-auto ms-0 text-center">
+                            <input type="number" class="w-100 border border-1 border-dark text-center mx-auto" asp-for="@Model.PO"
+                            value="@Model.PO">
+                        </div>
+                    </div>
+                    <div class="row text-center mx-auto">
+                        <div class="col-2 mx-auto text-center px-0 me-0">
+                            <label class="m-auto">PL</label>
+                        </div>
+                        <div class="col-4 mx-auto ms-0 text-center">
+                            <input type="number" class="w-100 border border-1 border-dark text-center mx-auto" asp-for="@Model.PL"
+                            value="@Model.PL">
+                        </div>
+                    </div>
+                    <button type="submit" class="btn btn-primary mt-3">Save</button>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+
+            </div>
+        </div>
+    </div>
+</div>

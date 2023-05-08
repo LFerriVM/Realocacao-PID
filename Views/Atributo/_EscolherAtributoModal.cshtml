@@ -1,0 +1,193 @@
+@model Personagem;
+
+<script src="~/js/atributo.js"></script>
+
+<div class="modal fade" id="_EscolherAtributoModal" tabindex="-1" data-bs-backdrop="static" data-bs-keyboard="false"
+    role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitleId">Atributos</h5>
+                <button type="button" onclick="flushLocal()" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+
+                <form method="POST" asp-action="EscolherAtributo" asp-controller="Atributo">
+                    <input type="hidden" asp-for="@Model.IdPersonagem">
+
+                    <div class="text-center">
+                        <div class="at">
+                            <h2 style="margin: 10px; width: 100%">Defina seus atributos!</h1>
+                                <hr>
+                                <div class="divatributos">
+                                    <h3 style="display: inline-block; margin: auto">Distribuição Padrão</h3>
+                                    <input type="radio" id="radio_distpadrao" name="rolagem" onclick="escolher(this)">
+                                    <h5>/ 8 / 10 / 12 / 13 / 14 / 15 /</h5>
+                                </div>
+                                @* <div class="divatributos">
+                                    <h3 style="display: inline-block; margin: auto">4d6 - "Menor"</h3>
+                                    <input type="radio" id="radio_distrolar" name="rolagem" onclick="escolher(this)">
+                                    </div> *@
+                        </div>
+
+                        <div class="div_dist" id="div_distpadrao" style="visibility: hidden; display: none">
+                            <div style="row col text-center">
+                                <div class="m-auto text-center">
+                                    <p class="lead">Força</p>
+                                    <select onclick="atributos(this)" class="form-select w-25 m-auto select_dist" asp-for="@Model.Forca">
+                                        <option value="">-</option>
+                                        <option class="select_dist_8" value="8">8</option>
+                                        <option class="select_dist_10" value="10">10</option>
+                                        <option class="select_dist_12" value="12">12</option>
+                                        <option class="select_dist_13" value="13">13</option>
+                                        <option class="select_dist_14" value="14">14</option>
+                                        <option class="select_dist_15" value="15">15</option>
+                                    </select>
+                                    <span asp-validation-for="@Model.Forca"></span>
+                                </div>
+
+                                <div class="m-auto text-center">
+                                    <p class="lead">Destreza</p>
+                                    <select onclick="atributos(this)" class="form-select w-25 m-auto select_dist" asp-for="@Model.Destreza">
+                                        <option value="">-</option>
+                                        <option class="select_dist_8" value="8">8</option>
+                                        <option class="select_dist_10" value="10">10</option>
+                                        <option class="select_dist_12" value="12">12</option>
+                                        <option class="select_dist_13" value="13">13</option>
+                                        <option class="select_dist_14" value="14">14</option>
+                                        <option class="select_dist_15" value="15">15</option>
+                                    </select>
+                                    <span asp-validation-for="@Model.Destreza"></span>
+                                </div>
+
+                                <div class="m-auto text-center">
+                                    <p class="lead">Constituição</p>
+                                    <select onclick="atributos(this)" class="form-select w-25 m-auto select_dist" asp-for="@Model.Constituicao">
+                                        <option value="">-</option>
+                                        <option class="select_dist_8" value="8">8</option>
+                                        <option class="select_dist_10" value="10">10</option>
+                                        <option class="select_dist_12" value="12">12</option>
+                                        <option class="select_dist_13" value="13">13</option>
+                                        <option class="select_dist_14" value="14">14</option>
+                                        <option class="select_dist_15" value="15">15</option>
+                                    </select>
+                                    <span asp-validation-for="@Model.Constituicao"></span>
+                                </div>
+
+                                <div class="m-auto text-center">
+                                    <p class="lead">Inteligência</p>
+                                    <select onclick="atributos(this)" class="form-select w-25 m-auto select_dist" asp-for="@Model.Inteligencia">
+                                        <option value="">-</option>
+                                        <option class="select_dist_8" value="8">8</option>
+                                        <option class="select_dist_10" value="10">10</option>
+                                        <option class="select_dist_12" value="12">12</option>
+                                        <option class="select_dist_13" value="13">13</option>
+                                        <option class="select_dist_14" value="14">14</option>
+                                        <option class="select_dist_15" value="15">15</option>
+                                    </select>
+                                    <span asp-validation-for=@Model.Inteligencia></span>
+                                </div>
+
+                                <div class="m-auto text-center">
+                                    <p class="lead">Sabedoria</p>
+                                    <select onclick="atributos(this)" class="form-select w-25 m-auto select_dist" asp-for="@Model.Sabedoria">
+                                        <option value="">-</option>
+                                        <option class="select_dist_8" value="8">8</option>
+                                        <option class="select_dist_10" value="10">10</option>
+                                        <option class="select_dist_12" value="12">12</option>
+                                        <option class="select_dist_13" value="13">13</option>
+                                        <option class="select_dist_14" value="14">14</option>
+                                        <option class="select_dist_15" value="15">15</option>
+                                    </select>
+                                    <span asp-validation-for="@Model.Sabedoria"></span>
+                                </div>
+
+                                <div class="m-auto text-center">
+                                    <p class="lead">Carisma</p>
+                                    <select onclick="atributos(this)" class="form-select w-25 m-auto select_dist" asp-for="@Model.Carisma">
+                                        <option value="">-</option>
+                                        <option class="select_dist_8" value="8">8</option>
+                                        <option class="select_dist_10" value="10">10</option>
+                                        <option class="select_dist_12" value="12">12</option>
+                                        <option class="select_dist_13" value="13">13</option>
+                                        <option class="select_dist_14" value="14">14</option>
+                                        <option class="select_dist_15" value="15">15</option>
+                                    </select>
+                                    <span asp-validation-for="@Model.Carisma"></span>
+                                </div>
+                            </div>
+                            <br>
+                        </div>
+
+                        @* <div class="div_dist" id="div_distrolar" style="visibility: hidden; display: none">
+                            <div class="distrolar">
+                            <label for="roladorforca">
+                            <p class="lead">Força</p>
+                            </label>
+                            <input class="roladorforca" type="text" style="width: 20px" readonly asp-for="@Model.Forca">
+                            <span asp-validation-for="@Model.Forca"></span>
+                            <label id="roladorforca" onclick="rolar(this)">Rolar</label>
+                            </div>
+
+                            <div class="distrolar">
+                            <label for="roladordestreza">
+                            <p class="lead">Destreza</p>
+                            </label>
+                            <input class="roladordestreza" type="text" style="width: 20px" readonly
+                            asp-for="@Model.Destreza">
+                            <span asp-validation-for="@Model.Destreza"></span>
+                            <label id="roladordestreza" onclick="rolar(this)">Rolar</label>
+                            </div>
+
+                            <div class="distrolar">
+                            <label for="roladoreconstituicao">
+                            <p class="lead">Constituição</p>
+                            </label>
+                            <input class="roladorconstituicao" type="text" style="width: 20px" readonly
+                            asp-for="@Model.Constituicao">
+                            <span asp-validation-for="@Model.Constituicao"></span>
+                            <label id="roladorconstituicao" onclick="rolar(this)">Rolar</label>
+                            </div>
+
+                            <div class="distrolar">
+                            <label for="roladorinteligencia">
+                            <p class="lead">Inteligência</p>
+                            </label>
+                            <input class="roladorinteligencia" type="text" style="width: 20px" readonly
+                            asp-for="@Model.Inteligencia">
+                            <span asp-validation-for="@Model.Inteligencia"></span>
+                            <label id="roladorinteligencia" onclick="rolar(this)">Rolar</label>
+                            </div>
+
+                            <div class="distrolar">
+                            <label for="roladorsabedoria">
+                            <p class="lead">Sabedoria</p>
+                            </label>
+                            <input class="roladorsabedoria" type="text" style="width: 20px" readonly
+                            asp-for="@Model.Sabedoria">
+                            <span asp-validation-for="@Model.Sabedoria"></span>
+                            <label id="roladorsabedoria" onclick="rolar(this)">Rolar</label>
+                            </div>
+
+                            <div class="distrolar">
+                            <label for="rolarocarisma">
+                            <p class="lead">Carisma</p>
+                            </label>
+                            <input class="roladorcarisma" type="text" style="width: 20px" readonly
+                            asp-for="@Model.Carisma">
+                            <span asp-validation-for="@Model.Carisma"></span>
+                            <label id="roladorcarisma" onclick="rolar(this)">Rolar</label>
+                            </div>
+                            </div> *@
+                    </div>
+                    <div class="col m-auto text-center">
+                        <button type="submit" class="btn btn-primary m-auto">Save</button>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" onclick="flushLocal()" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
